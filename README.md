@@ -146,7 +146,7 @@ buildcart/
 | Accent Color | `#f59e0b` (Amber) |
 | Tagline | "From Foundation to Finish, We've Got You" |
 | Target Market | Nairobi Metro, Kenya |
-| WhatsApp | +254 712 345 678 |
+| WhatsApp | +254 711287778 |
 | Currency | KES (Kenyan Shilling) |
 
 ---

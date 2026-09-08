@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#166534">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="BuildCart">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <title>Product — BuildCart Kenya</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{colors:{bc:{'50':'#f0fdf4','100':'#dcfce7','200':'#bbf7d0','300':'#86efac','400':'#4ade80','500':'#22c55e','600':'#16a34a','700':'#15803d','800':'#166534','900':'#14532d'},amber:{'400':'#fbbf24','500':'#f59e0b'}}}}}</script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+  <!-- NAVBAR -->
+  <nav class="bg-bc-800 shadow-lg sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center justify-between h-16">
+        <a href="index.html" class="flex items-center gap-2 text-white font-bold text-xl tracking-tight">
+          <span class="bg-bc-400 w-9 h-9 rounded-lg flex items-center justify-center text-bc-900"><i class="fas fa-hard-hat"></i></span>
+          Build<span class="text-amber-400">Cart</span>
+        </a>
+        <div class="hidden md:flex items-center gap-5">
+          <a href="materials.html" class="text-gray-200 hover:text-white font-medium text-sm transition">Materials</a>
+          <a href="services.html" class="text-gray-200 hover:text-white font-medium text-sm transition">Hire a Fundi</a>
+          <a href="calculator.html" class="text-gray-200 hover:text-white font-medium text-sm transition"><i class="fas fa-calculator mr-1"></i>Calculator</a>
+          <a href="orders.html" class="text-gray-200 hover:text-white font-medium text-sm transition"><i class="fas fa-box mr-1"></i>Orders</a>
+          <button onclick="SwahiliToggle.toggle(); location.reload();" class="text-sm text-gray-200 hover:text-white font-medium px-3 py-1 rounded-lg border border-green-700 hover:border-green-500 transition">🇰🇪 SW</button>
+          <a href="cart.html" class="relative text-gray-200 hover:text-white transition p-2">
+            <i class="fas fa-shopping-cart text-lg"></i>
+            <span id="cart-badge" class="absolute -top-1 -right-1 bg-amber-500 text-bc-900 text-xs font-bold rounded-full w-5 h-5 items-center justify-center" style="display:none">0</span>
+          </a>
+        </div>
+        <div class="md:hidden flex items-center gap-2">
+          <button onclick="SwahiliToggle.toggle(); location.reload();" class="text-sm text-gray-200 font-medium px-2 py-1 rounded-lg border border-green-700">🇰🇪</button>
+          <a href="cart.html" class="relative text-gray-200 p-2">
+            <i class="fas fa-shopping-cart text-lg"></i>
+            <span id="cart-badge" class="absolute -top-1 -right-1 bg-amber-500 text-bc-900 text-xs font-bold rounded-full w-5 h-5 items-center justify-center" style="display:none">0</span>
+          </a>
+          <button onclick="toggleMobileMenu()" class="text-gray-200 p-2"><i class="fas fa-bars text-xl"></i></button>
+        </div>
+      </div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-bc-900 border-t border-bc-700">
+      <div class="px-4 py-3 space-y-2">
+        <a href="materials.html" class="block text-gray-200 hover:text-white py-2 font-medium">Materials</a>
+        <a href="services.html" class="block text-gray-200 hover:text-white py-2 font-medium">Hire a Fundi</a>
+        <a href="calculator.html" class="block text-gray-200 hover:text-white py-2 font-medium"><i class="fas fa-calculator mr-1"></i>Calculator</a>
+        <a href="orders.html" class="block text-gray-200 hover:text-white py-2 font-medium"><i class="fas fa-box mr-1"></i>Orders</a>
+        <a href="cart.html" class="block text-gray-200 hover:text-white py-2 font-medium">Cart</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <div class="bg-white border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3">
+      <div class="flex items-center gap-2 text-sm" id="breadcrumb">
+        <a href="index.html" class="text-bc-700 hover:text-bc-800"><i class="fas fa-home"></i></a>
+        <i class="fas fa-chevron-right text-gray-300 text-xs"></i>
+        <a href="materials.html" class="text-bc-700 hover:text-bc-800">Materials</a>
+        <i class="fas fa-chevron-right text-gray-300 text-xs"></i>
+        <span class="text-gray-500" id="bc-category">—</span>
+        <i class="fas fa-chevron-right text-gray-300 text-xs"></i>
+        <span class="text-gray-900 font-medium" id="bc-product">—</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRODUCT DETAIL -->
+  <section class="py-8" id="product-section">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="lg:flex gap-10">
+        <!-- Image -->
+        <div class="lg:w-1/2 mb-6 lg:mb-0">
+          <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+            <div class="relative h-64 sm:h-80 lg:h-[420px] bg-gray-100">
+              <img id="product-image" src="" alt="" class="w-full h-full object-cover" loading="lazy">
+              <span id="product-badge" class="absolute top-4 left-4 bg-bc-800 text-white text-xs font-semibold px-3 py-1 rounded-md"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Info -->
+        <div class="lg:w-1/2">
+          <p class="text-sm text-gray-500 mb-1" id="product-brand"></p>
+          <h1 class="text-2xl md:text-3xl font-extrabold text-gray-900 mb-3" id="product-name"></h1>
+          <p class="text-gray-600 mb-4 leading-relaxed" id="product-desc"></p>
+
+          <!-- Price -->
+          <div class="bg-bc-50 rounded-xl p-5 mb-6 border border-bc-100">
+            <div class="flex items-end gap-3">
+              <span class="text-3xl font-extrabold text-bc-800 price-tag" id="product-price"></span>
+              <span class="text-gray-500 text-sm" id="product-unit"></span>
+            </div>
+            <div class="flex items-center gap-2 mt-2 text-sm text-bc-700">
+              <i class="fas fa-truck"></i>
+              <span>Delivery available in Nairobi Metro (1–3 days)</span>
+            </div>
+            <div class="flex items-center gap-2 mt-1 text-sm text-bc-700">
+              <i class="fas fa-file-invoice"></i>
+              <span>eTIMS compliant materials</span>
+            </div>
+          </div>
+
+          <!-- Features -->
+          <div class="mb-6">
+            <h3 class="font-bold text-sm text-gray-700 mb-3">Key Features</h3>
+            <div class="grid grid-cols-2 gap-2" id="product-features">
+            </div>
+          </div>
+
+          <!-- Quantity & Add to Cart -->
+          <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
+            <label class="font-semibold text-sm text-gray-700 mb-3 block">Quantity</label>
+            <div class="qty-stepper flex items-center gap-3 mb-4">
+              <button onclick="changeQty(-1)">−</button>
+              <input type="number" id="qty-input" value="1" min="1" onchange="syncQty(this.value)">
+              <button onclick="changeQty(1)">+</button>
+            </div>
+            <div class="flex gap-3">
+              <button id="add-to-cart-btn" class="btn-press flex-1 bg-bc-800 hover:bg-bc-700 text-white font-bold py-3.5 rounded-xl transition flex items-center justify-center gap-2">
+                <i class="fas fa-cart-plus"></i> Add to Cart
+              </button>
+              <a id="whatsapp-btn" href="#" target="_blank" class="btn-press bg-green-600 hover:bg-green-500 text-white font-bold py-3.5 px-5 rounded-xl transition flex items-center justify-center gap-2">
+                <i class="fab fa-whatsapp text-lg"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Need installation? -->
+          <div class="mt-6 bg-amber-50 rounded-xl p-5 border border-amber-200">
+            <div class="flex items-start gap-3">
+              <i class="fas fa-tools text-amber-600 text-xl mt-0.5"></i>
+              <div>
+                <h3 class="font-bold text-gray-900 text-sm mb-1">Need Installation?</h3>
+                <p class="text-gray-600 text-sm mb-3">We can connect you with a vetted fundi to professionally install this item.</p>
+                <a id="hire-fundi-link" href="services.html" class="btn-press inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-bc-900 font-semibold px-5 py-2 rounded-lg text-sm transition">
+                  <i class="fas fa-search"></i> Find a Fundi
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RELATED PRODUCTS -->
+  <section class="py-10 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <h2 class="text-2xl font-extrabold text-gray-900 mb-6">Related Products</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5" id="related-grid">
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-bc-900 text-green-200 py-8 mt-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      <a href="index.html" class="flex items-center gap-2 text-white font-bold text-lg">
+        <span class="bg-bc-400 w-7 h-7 rounded-lg flex items-center justify-center text-bc-900"><i class="fas fa-hard-hat"></i></span>
+        Build<span class="text-amber-400">Cart</span>
+      </a>
+      <p class="text-sm">From Foundation to Finish, We've Got You &bull; Nairobi, Kenya</p>
+      <a href="https://wa.me/254712345678" target="_blank" class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-500 text-white font-semibold px-4 py-2 rounded-lg text-sm transition">
+        <i class="fab fa-whatsapp"></i> WhatsApp Us
+      </a>
+    </div>
+  </footer>
+
+  <!-- WhatsApp float -->
+  <a href="https://wa.me/254712345678?text=Hi%20BuildCart%2C%20I%20need%20help%20with%20a%20product" target="_blank" class="whatsapp-float fixed bottom-6 right-6 bg-green-600 hover:bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-2xl z-40 transition">
+    <i class="fab fa-whatsapp text-2xl"></i>
+  </a>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    let currentProduct = null;
+    let qty = 1;
+
+    function changeQty(delta) {
+      qty = Math.max(1, qty + delta);
+      document.getElementById('qty-input').value = qty;
+    }
+    function syncQty(v) {
+      qty = Math.max(1, parseInt(v) || 1);
+      document.getElementById('qty-input').value = qty;
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const pid = params.get('id');
+    const data = window.BUILDCART_DATA;
+
+    if (pid) {
+      currentProduct = data.PRODUCTS.find(p => p.id === pid);
+    }
+
+    if (currentProduct) {
+      document.title = currentProduct.name + ' — BuildCart Kenya';
+      document.getElementById('product-image').src = currentProduct.image;
+      document.getElementById('product-image').alt = currentProduct.name;
+      document.getElementById('product-badge').textContent = currentProduct.category;
+      document.getElementById('product-brand').textContent = currentProduct.brand;
+      document.getElementById('product-name').textContent = currentProduct.name;
+      document.getElementById('product-desc').textContent = currentProduct.description;
+      document.getElementById('product-price').textContent = formatKES(currentProduct.price);
+      document.getElementById('product-unit').textContent = currentProduct.unit;
+
+      // Breadcrumb
+      const cat = data.CATEGORIES.find(c => c.id === currentProduct.category);
+      document.getElementById('bc-category').textContent = cat ? cat.name : currentProduct.category;
+      document.getElementById('bc-category').href = 'materials.html?category=' + currentProduct.category;
+      document.getElementById('bc-product').textContent = currentProduct.name;
+
+      // Features
+      const featGrid = document.getElementById('product-features');
+      (currentProduct.features || []).forEach(f => {
+        featGrid.innerHTML += `<div class="flex items-center gap-2 text-sm text-gray-600"><i class="fas fa-check text-bc-600 text-xs"></i>${f}</div>`;
+      });
+
+      // Add to cart
+      document.getElementById('add-to-cart-btn').addEventListener('click', () => {
+        Cart.addItem(currentProduct, qty);
+      });
+
+      // WhatsApp
+      const waMsg = encodeURIComponent(`Hi BuildCart, I'm interested in: ${currentProduct.name} (${formatKES(currentProduct.price)}). Please advise.`);
+      document.getElementById('whatsapp-btn').href = `https://wa.me/254712345678?text=${waMsg}`;
+
+      // Hire fundi link
+      const tradeMap = { cement: 'handyman', steel: 'handyman', roofing: 'roofing', plumbing: 'plumbing', electrical: 'electrical', finishes: 'painting', timber: 'handyman', blocks: 'handyman', aggregate: 'handyman' };
+      const trade = tradeMap[currentProduct.category] || 'handyman';
+      document.getElementById('hire-fundi-link').href = `services.html?trade=${trade}`;
+
+      // Related products
+      const related = data.PRODUCTS.filter(p => p.category === currentProduct.category && p.id !== currentProduct.id).slice(0, 4);
+      const relGrid = document.getElementById('related-grid');
+      related.forEach(p => {
+        relGrid.innerHTML += `
+          <div class="product-card bg-gray-50 rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+            <a href="product.html?id=${p.id}" class="block">
+              <div class="relative h-36 bg-gray-100 overflow-hidden">
+                <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover hover:scale-105 transition duration-300" loading="lazy">
+              </div>
+            </a>
+            <div class="p-3">
+              <p class="text-xs text-gray-500">${p.brand}</p>
+              <a href="product.html?id=${p.id}" class="font-semibold text-gray-900 text-sm mb-1 hover:text-bc-700 transition block">${p.name}</a>
+              <p class="text-lg font-bold text-bc-800 price-tag">${formatKES(p.price)}</p>
+            </div>
+          </div>`;
+      });
+    } else {
+      document.getElementById('product-section').innerHTML = `
+        <div class="text-center py-20">
+          <i class="fas fa-exclamation-circle text-gray-300 text-5xl mb-4"></i>
+          <h2 class="text-2xl font-bold text-gray-400 mb-2">Product Not Found</h2>
+          <p class="text-gray-400 mb-6">The product you're looking for doesn't exist.</p>
+          <a href="materials.html" class="bg-bc-800 text-white font-semibold px-6 py-2.5 rounded-lg">Browse Materials</a>
+        </div>`;
+    }
+  </script>
+  <script src="js/pwa.js"></script>
+</body>
+</html>

@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#166534">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="BuildCart">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <title>Material Calculator — BuildCart Kenya</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{colors:{bc:{'50':'#f0fdf4','100':'#dcfce7','200':'#bbf7d0','300':'#86efac','400':'#4ade80','500':'#22c55e','600':'#16a34a','700':'#15803d','800':'#166534','900':'#14532d'},amber:{'400':'#fbbf24','500':'#f59e0b'}}}}}</script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+  <!-- NAVBAR -->
+  <nav class="bg-bc-800 shadow-lg sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center justify-between h-16">
+        <a href="index.html" class="flex items-center gap-2 text-white font-bold text-xl tracking-tight">
+          <span class="bg-bc-400 w-9 h-9 rounded-lg flex items-center justify-center text-bc-900"><i class="fas fa-hard-hat"></i></span>
+          Build<span class="text-amber-400">Cart</span>
+        </a>
+        <div class="hidden md:flex items-center gap-5">
+          <a href="materials.html" class="text-gray-200 hover:text-white font-medium text-sm transition">Materials</a>
+          <a href="services.html" class="text-gray-200 hover:text-white font-medium text-sm transition">Hire a Fundi</a>
+          <a href="calculator.html" class="text-white font-medium text-sm"><i class="fas fa-calculator mr-1"></i>Calculator</a>
+          <a href="orders.html" class="text-gray-200 hover:text-white font-medium text-sm transition">Orders</a>
+          <button onclick="SwahiliToggle.toggle(); location.reload();" class="text-sm text-gray-200 hover:text-white font-medium px-3 py-1 rounded-lg border border-green-700 hover:border-green-500 transition">🇰🇪 SW</button>
+          <a href="cart.html" class="relative text-gray-200 hover:text-white transition p-2">
+            <i class="fas fa-shopping-cart text-lg"></i>
+            <span id="cart-badge" class="absolute -top-1 -right-1 bg-amber-500 text-bc-900 text-xs font-bold rounded-full w-5 h-5 items-center justify-center" style="display:none">0</span>
+          </a>
+        </div>
+        <div class="md:hidden flex items-center gap-2">
+          <a href="cart.html" class="relative text-gray-200 p-2">
+            <i class="fas fa-shopping-cart text-lg"></i>
+            <span id="cart-badge" class="absolute -top-1 -right-1 bg-amber-500 text-bc-900 text-xs font-bold rounded-full w-5 h-5 items-center justify-center" style="display:none">0</span>
+          </a>
+          <button onclick="toggleMobileMenu()" class="text-gray-200 p-2"><i class="fas fa-bars text-xl"></i></button>
+        </div>
+      </div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-bc-900 border-t border-bc-700">
+      <div class="px-4 py-3 space-y-2">
+        <a href="materials.html" class="block text-gray-200 hover:text-white py-2 font-medium">Materials</a>
+        <a href="services.html" class="block text-gray-200 hover:text-white py-2 font-medium">Hire a Fundi</a>
+        <a href="calculator.html" class="block text-white py-2 font-medium">Calculator</a>
+        <a href="orders.html" class="block text-gray-200 hover:text-white py-2 font-medium">Orders</a>
+        <a href="cart.html" class="block text-gray-200 hover:text-white py-2 font-medium">Cart</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <section class="bg-gradient-to-r from-bc-800 to-bc-900 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center gap-3 mb-2">
+        <a href="index.html" class="text-green-200 hover:text-white text-sm"><i class="fas fa-home"></i></a>
+        <i class="fas fa-chevron-right text-green-300 text-xs"></i>
+        <span class="text-green-200 text-sm">Calculator</span>
+      </div>
+      <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-2">Material Calculator</h1>
+      <p class="text-green-200">Estimate exactly how much you need — no guesswork, no waste</p>
+    </div>
+  </section>
+
+  <!-- CALCULATOR CARDS -->
+  <section class="py-10">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 space-y-8">
+
+      <!-- Cement Calculator -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="bg-bc-50 px-6 py-4 border-b border-bc-100">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-bc-800 rounded-lg flex items-center justify-center text-white"><i class="fas fa-cubes"></i></div>
+            <div>
+              <h2 class="font-bold text-gray-900">Cement Calculator</h2>
+              <p class="text-sm text-gray-500">How many bags for your concrete or plaster?</p>
+            </div>
+          </div>
+        </div>
+        <div class="p-6">
+          <div class="grid md:grid-cols-3 gap-4 items-end">
+            <div>
+              <label class="font-semibold text-sm text-gray-700 mb-1.5 block">Calculation Type</label>
+              <select id="cement-type" class="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm">
+                <option value="bags_per_m3">Concrete (bags per m³)</option>
+                <option value="plaster">Plaster (bags per m²)</option>
+              </select>
+            </div>
+            <div>
+              <label class="font-semibold text-sm text-gray-700 mb-1.5 block">Volume (m³) or Area (m²)</label>
+              <input type="number" id="cement-input" placeholder="e.g. 5" class="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm">
+            </div>
+            <button onclick="calcCement()" class="bg-bc-800 hover:bg-bc-700 text-white font-bold py-2.5 px-6 rounded-lg transition flex items-center gap-2">
+              <i class="fas fa-calculator"></i> Calculate
+            </button>
+          </div>
+          <div id="cement-result" class="mt-4 hidden bg-bc-50 rounded-xl p-4 border border-bc-100">
+            <div class="flex items-center gap-3">
+              <i class="fas fa-check-circle text-bc-600 text-xl"></i>
+              <div>
+                <p class="font-bold text-bc-800 text-lg" id="cement-bags"></p>
+                <p class="text-sm text-gray-600" id="cement-desc"></p>
+              </div>
+            </div>
+            <a href="materials.html?category=cement" class="mt-3 inline-flex items-center gap-2 text-sm font-medium text-bc-700 hover:text-bc-800 transition">
+              <i class="fas fa-shopping-cart"></i> Order Cement Now
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Blocks Calculator -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="bg-amber-50 px-6 py-4 border-b border-amber-100">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-amber-500 rounded-lg flex items-center justify-center text-bc-900"><i class="fas fa-building"></i></div>
+            <div>
+              <h2 class="font-bold text-gray-900">Blocks Calculator</h2>
+              <p class="text-sm text-gray-500">How many blocks for your wall?</p>
+            </div>
+          </div>
+        </div>
+        <div class="p-6">
+          <div class="grid md:grid-cols-3 gap-4 items-end">
+            <div>
+              <label class="font-semibold text-sm text-gray-700 mb-1.5 block">Block Type</label>
+              <select id="blocks-type" class="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm">
+                <option value="6-inch">6-inch Block</option>
+                <option value="8-inch">8-inch Block</option>
+                <option value="issb">ISSB (Interlocking)</option>
+              </select>
+            </div>
+            <div>
+              <label class="font-semibold text-sm text-gray-700 mb-1.5 block">Wall Area (m²)</label>
+              <input type="number" id="blocks-input" placeholder="e.g. 50" class="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm">
+            </div>
+            <button onclick="calcBlocks()" class="bg-amber-500 hover:bg-amber-400 text-bc-900 font-bold py-2.5 px-6 rounded-lg transition flex items-center gap-2">
+              <i class="fas fa-calculator"></i> Calculate
+            </button>
+          </div>
+          <div id="blocks-result" class="mt-4 hidden bg-amber-50 rounded-xl p-4 border border-amber-200">
+            <div class="flex items-center gap-3">
+              <i class="fas fa-check-circle text-amber-600 text-xl"></i>
+              <div>
+                <p class="font-bold text-amber-800 text-lg" id="blocks-count"></p>
+                <p class="text-sm text-gray-600" id="blocks-desc"></p>
+              </div>
+            </div>
+            <a href="materials.html?category=blocks" class="mt-3 inline-flex items-center gap-2 text-sm font-medium text-amber-700 hover:text-amber-800 transition">
+              <i class="fas fa-shopping-cart"></i> Order Blocks Now
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Roofing Calculator -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="bg-bc-50 px-6 py-4 border-b border-bc-100">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-bc-800 rounded-lg flex items-center justify-center text-white"><i class="fas fa-home"></i></div>
+            <div>
+              <h2 class="font-bold text-gray-900">Roofing Calculator</h2>
+              <p class="text-sm text-gray-500">How many mabati sheets for your roof?</p>
+            </div>
+          </div>
+        </div>
+        <div class="p-6">
+          <div class="grid md:grid-cols-3 gap-4 items-end">
+            <div>
+              <label class="font-semibold text-sm text-gray-700 mb-1.5 block">Sheet Length</label>
+              <select id="roofing-length" class="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm">
+                <option value="2">2 metres</option>
+                <option value="2.4">2.4 metres</option>
+                <option value="3" selected>3 metres</option>
+                <option value="3.6">3.6 metres</option>
+              </select>
+            </div>
+            <div>
+              <label class="font-semibold text-sm text-gray-700 mb-1.5 block">Roof Area (m²)</label>
+              <input type="number" id="roofing-input" placeholder="e.g. 100" class="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm">
+            </div>
+            <button onclick="calcRoofing()" class="bg-bc-800 hover:bg-bc-700 text-white font-bold py-2.5 px-6 rounded-lg transition flex items-center gap-2">
+              <i class="fas fa-calculator"></i> Calculate
+            </button>
+          </div>
+          <div id="roofing-result" class="mt-4 hidden bg-bc-50 rounded-xl p-4 border border-bc-100">
+            <div class="flex items-center gap-3">
+              <i class="fas fa-check-circle text-bc-600 text-xl"></i>
+              <div>
+                <p class="font-bold text-bc-800 text-lg" id="roofing-count"></p>
+                <p class="text-sm text-gray-600" id="roofing-desc"></p>
+              </div>
+            </div>
+            <a href="materials.html?category=roofing" class="mt-3 inline-flex items-center gap-2 text-sm font-medium text-bc-700 hover:text-bc-800 transition">
+              <i class="fas fa-shopping-cart"></i> Order Roofing Now
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Paint Calculator -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="bg-amber-50 px-6 py-4 border-b border-amber-100">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-amber-500 rounded-lg flex items-center justify-center text-bc-900"><i class="fas fa-paint-roller"></i></div>
+            <div>
+              <h2 class="font-bold text-gray-900">Paint Calculator</h2>
+              <p class="text-sm text-gray-500">How much paint for your walls?</p>
+            </div>
+          </div>
+        </div>
+        <div class="p-6">
+          <div class="grid md:grid-cols-3 gap-4 items-end">
+            <div>
+              <label class="font-semibold text-sm text-gray-700 mb-1.5 block">Number of Coats</label>
+              <select id="paint-coats" class="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm">
+                <option value="1">1 coat</option>
+                <option value="2" selected>2 coats</option>
+                <option value="3">3 coats</option>
+              </select>
+            </div>
+            <div>
+              <label class="font-semibold text-sm text-gray-700 mb-1.5 block">Wall Area (m²)</label>
+              <input type="number" id="paint-input" placeholder="e.g. 200" class="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm">
+            </div>
+            <button onclick="calcPaint()" class="bg-amber-500 hover:bg-amber-400 text-bc-900 font-bold py-2.5 px-6 rounded-lg transition flex items-center gap-2">
+              <i class="fas fa-calculator"></i> Calculate
+            </button>
+          </div>
+          <div id="paint-result" class="mt-4 hidden bg-amber-50 rounded-xl p-4 border border-amber-200">
+            <div class="flex items-center gap-3">
+              <i class="fas fa-check-circle text-amber-600 text-xl"></i>
+              <div>
+                <p class="font-bold text-amber-800 text-lg" id="paint-count"></p>
+                <p class="text-sm text-gray-600" id="paint-desc"></p>
+              </div>
+            </div>
+            <a href="materials.html?category=finishes" class="mt-3 inline-flex items-center gap-2 text-sm font-medium text-amber-700 hover:text-amber-800 transition">
+              <i class="fas fa-shopping-cart"></i> Order Paint Now
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tiles Calculator -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="bg-bc-50 px-6 py-4 border-b border-bc-100">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-bc-800 rounded-lg flex items-center justify-center text-white"><i class="fas fa-border-all"></i></div>
+            <div>
+              <h2 class="font-bold text-gray-900">Tiles Calculator</h2>
+              <p class="text-sm text-gray-500">How many tiles for your floor?</p>
+            </div>
+          </div>
+        </div>
+        <div class="p-6">
+          <div class="grid md:grid-cols-2 gap-4 items-end">
+            <div>
+              <label class="font-semibold text-sm text-gray-700 mb-1.5 block">Floor Area (m²)</label>
+              <input type="number" id="tiles-input" placeholder="e.g. 30" class="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm">
+            </div>
+            <button onclick="calcTiles()" class="bg-bc-800 hover:bg-bc-700 text-white font-bold py-2.5 px-6 rounded-lg transition flex items-center gap-2">
+              <i class="fas fa-calculator"></i> Calculate
+            </button>
+          </div>
+          <div id="tiles-result" class="mt-4 hidden bg-bc-50 rounded-xl p-4 border border-bc-100">
+            <div class="flex items-center gap-3">
+              <i class="fas fa-check-circle text-bc-600 text-xl"></i>
+              <div>
+                <p class="font-bold text-bc-800 text-lg" id="tiles-count"></p>
+                <p class="text-sm text-gray-600" id="tiles-desc"></p>
+              </div>
+            </div>
+            <a href="materials.html?category=finishes" class="mt-3 inline-flex items-center gap-2 text-sm font-medium text-bc-700 hover:text-bc-800 transition">
+              <i class="fas fa-shopping-cart"></i> Order Tiles Now
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tips section -->
+      <div class="bg-gradient-to-br from-bc-800 to-bc-900 rounded-2xl p-8 text-white">
+        <h2 class="text-2xl font-extrabold mb-4"><i class="fas fa-lightbulb text-amber-400 mr-2"></i>Builder's Tips</h2>
+        <div class="grid md:grid-cols-2 gap-6 text-green-100 text-sm leading-relaxed">
+          <div>
+            <h3 class="font-bold text-white mb-2">Ordering Cement</h3>
+            <ul class="space-y-1 list-disc list-inside">
+              <li>Always add 5-10% extra for waste and spillage</li>
+              <li>C20 mix (1:2:4) uses ~6 bags per m³</li>
+              <li>C25 mix uses ~7 bags per m³</li>
+              <li>Plaster (15mm) covers ~30m² per 50kg bag</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-bold text-white mb-2">Ordering Blocks</h3>
+            <ul class="space-y-1 list-disc list-inside">
+              <li>~10 blocks per m² for standard wall</li>
+              <li>Add 5% for breakages during transport</li>
+              <li>6-inch for internal walls, 8-inch for external</li>
+              <li>ISSB blocks need no mortar between courses</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-bold text-white mb-2">Ordering Roofing</h3>
+            <ul class="space-y-1 list-disc list-inside">
+              <li>Account for 15% overlap between sheets</li>
+              <li>28-gauge lasts longer in harsh weather</li>
+              <li>Don't forget ridge caps, gutters & flashings</li>
+              <li>Add 2-3 extra sheets for cutting waste</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-bold text-white mb-2">Ordering Paint</h3>
+            <ul class="space-y-1 list-disc list-inside">
+              <li>~8m² per litre per coat</li>
+              <li>Always buy primer/undercoat first</li>
+              <li>2 coats standard, 3 for dark colours over light</li>
+              <li>20L bucket covers ~120m² (2 coats)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="mt-6 flex flex-col sm:flex-row gap-3">
+          <a href="materials.html" class="btn-press bg-bc-400 hover:bg-bc-300 text-bc-900 font-bold px-6 py-3 rounded-xl transition inline-flex items-center justify-center gap-2">
+            <i class="fas fa-store"></i> Shop Materials
+          </a>
+          <a href="https://wa.me/254712345678?text=Hi%20BuildCart%2C%20I%20need%20help%20calculating%20materials%20for%20my%20project" target="_blank" class="btn-press bg-green-600 hover:bg-green-500 text-white font-bold px-6 py-3 rounded-xl transition inline-flex items-center justify-center gap-2">
+            <i class="fab fa-whatsapp text-xl"></i> Get Expert Help
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-bc-900 text-green-200 py-8 mt-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      <a href="index.html" class="flex items-center gap-2 text-white font-bold text-lg">
+        <span class="bg-bc-400 w-7 h-7 rounded-lg flex items-center justify-center text-bc-900"><i class="fas fa-hard-hat"></i></span>
+        Build<span class="text-amber-400">Cart</span>
+      </a>
+      <p class="text-sm">From Foundation to Finish, We've Got You &bull; Nairobi, Kenya</p>
+      <a href="https://wa.me/254712345678" target="_blank" class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-500 text-white font-semibold px-4 py-2 rounded-lg text-sm transition">
+        <i class="fab fa-whatsapp"></i> WhatsApp Us
+      </a>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/254712345678?text=Hi%20BuildCart%2C%20I%20need%20help%20with%20a%20calculation" target="_blank" class="whatsapp-float fixed bottom-6 right-6 bg-green-600 hover:bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-2xl z-40 transition">
+    <i class="fab fa-whatsapp text-2xl"></i>
+  </a>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    function calcCement() {
+      const type = document.getElementById('cement-type').value;
+      const input = parseFloat(document.getElementById('cement-input').value);
+      if (!input || input <= 0) { showToast('Enter a valid number', 'error'); return; }
+      const result = MaterialCalculator.calculateCement(input, type);
+      document.getElementById('cement-bags').textContent = `~${result.bags} bags of cement`;
+      document.getElementById('cement-desc').textContent = result.description;
+      document.getElementById('cement-result').classList.remove('hidden');
+    }
+    function calcBlocks() {
+      const type = document.getElementById('blocks-type').value;
+      const input = parseFloat(document.getElementById('blocks-input').value);
+      if (!input || input <= 0) { showToast('Enter a valid number', 'error'); return; }
+      const result = MaterialCalculator.calculateBlocks(input, type);
+      document.getElementById('blocks-count').textContent = `~${result.blocks} blocks`;
+      document.getElementById('blocks-desc').textContent = result.description;
+      document.getElementById('blocks-result').classList.remove('hidden');
+    }
+    function calcRoofing() {
+      const length = parseFloat(document.getElementById('roofing-length').value);
+      const input = parseFloat(document.getElementById('roofing-input').value);
+      if (!input || input <= 0) { showToast('Enter a valid number', 'error'); return; }
+      const result = MaterialCalculator.calculateRoofing(input, length);
+      document.getElementById('roofing-count').textContent = `~${result.sheets} roofing sheets`;
+      document.getElementById('roofing-desc').textContent = result.description;
+      document.getElementById('roofing-result').classList.remove('hidden');
+    }
+    function calcPaint() {
+      const coats = parseInt(document.getElementById('paint-coats').value);
+      const input = parseFloat(document.getElementById('paint-input').value);
+      if (!input || input <= 0) { showToast('Enter a valid number', 'error'); return; }
+      const result = MaterialCalculator.calculatePaint(input, coats);
+      document.getElementById('paint-count').textContent = `~${result.litres}L (${result.buckets} × 20L)`;
+      document.getElementById('paint-desc').textContent = result.description;
+      document.getElementById('paint-result').classList.remove('hidden');
+    }
+    function calcTiles() {
+      const input = parseFloat(document.getElementById('tiles-input').value);
+      if (!input || input <= 0) { showToast('Enter a valid number', 'error'); return; }
+      const result = MaterialCalculator.calculateTiles(input);
+      document.getElementById('tiles-count').textContent = `~${result.tiles} tiles`;
+      document.getElementById('tiles-desc').textContent = result.description;
+      document.getElementById('tiles-result').classList.remove('hidden');
+    }
+  </script>
+  <script src="js/pwa.js"></script>
+</body>
+</html>

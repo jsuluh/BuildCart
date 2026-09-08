@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#166534">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="BuildCart">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <title>My Orders — BuildCart Kenya</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{colors:{bc:{'50':'#f0fdf4','100':'#dcfce7','200':'#bbf7d0','300':'#86efac','400':'#4ade80','500':'#22c55e','600':'#16a34a','700':'#15803d','800':'#166534','900':'#14532d'},amber:{'400':'#fbbf24','500':'#f59e0b'}}}}}</script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+  <!-- NAVBAR -->
+  <nav class="bg-bc-800 shadow-lg sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center justify-between h-16">
+        <a href="index.html" class="flex items-center gap-2 text-white font-bold text-xl tracking-tight">
+          <span class="bg-bc-400 w-9 h-9 rounded-lg flex items-center justify-center text-bc-900"><i class="fas fa-hard-hat"></i></span>
+          Build<span class="text-amber-400">Cart</span>
+        </a>
+        <div class="hidden md:flex items-center gap-5">
+          <a href="materials.html" class="text-gray-200 hover:text-white font-medium text-sm transition">Materials</a>
+          <a href="services.html" class="text-gray-200 hover:text-white font-medium text-sm transition">Hire a Fundi</a>
+          <a href="calculator.html" class="text-gray-200 hover:text-white font-medium text-sm transition">Calculator</a>
+          <a href="orders.html" class="text-white font-medium text-sm"><i class="fas fa-box mr-1"></i>My Orders</a>
+          <a href="cart.html" class="relative text-gray-200 hover:text-white transition p-2">
+            <i class="fas fa-shopping-cart text-lg"></i>
+            <span id="cart-badge" class="absolute -top-1 -right-1 bg-amber-500 text-bc-900 text-xs font-bold rounded-full w-5 h-5 items-center justify-center" style="display:none">0</span>
+          </a>
+        </div>
+        <div class="md:hidden flex items-center gap-2">
+          <a href="cart.html" class="relative text-gray-200 p-2">
+            <i class="fas fa-shopping-cart text-lg"></i>
+            <span id="cart-badge" class="absolute -top-1 -right-1 bg-amber-500 text-bc-900 text-xs font-bold rounded-full w-5 h-5 items-center justify-center" style="display:none">0</span>
+          </a>
+          <button onclick="toggleMobileMenu()" class="text-gray-200 p-2"><i class="fas fa-bars text-xl"></i></button>
+        </div>
+      </div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-bc-900 border-t border-bc-700">
+      <div class="px-4 py-3 space-y-2">
+        <a href="materials.html" class="block text-gray-200 hover:text-white py-2 font-medium">Materials</a>
+        <a href="services.html" class="block text-gray-200 hover:text-white py-2 font-medium">Hire a Fundi</a>
+        <a href="calculator.html" class="block text-gray-200 hover:text-white py-2 font-medium">Calculator</a>
+        <a href="orders.html" class="block text-white py-2 font-medium">My Orders</a>
+        <a href="cart.html" class="block text-gray-200 hover:text-white py-2 font-medium">Cart</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <section class="bg-gradient-to-r from-bc-800 to-bc-900 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center gap-3 mb-2">
+        <a href="index.html" class="text-green-200 hover:text-white text-sm"><i class="fas fa-home"></i></a>
+        <i class="fas fa-chevron-right text-green-300 text-xs"></i>
+        <span class="text-green-200 text-sm">My Orders</span>
+      </div>
+      <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-2">Order History</h1>
+      <p class="text-green-200">Track your orders and delivery status</p>
+    </div>
+  </section>
+
+  <!-- ORDERS LIST -->
+  <section class="py-8">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      <div id="orders-list">
+        <!-- Populated by JS -->
+      </div>
+      <div id="no-orders" class="hidden text-center py-20">
+        <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+          <i class="fas fa-box-open text-gray-300 text-3xl"></i>
+        </div>
+        <h2 class="text-2xl font-bold text-gray-400 mb-2">No orders yet</h2>
+        <p class="text-gray-400 mb-8">Your order history will appear here after you make a purchase</p>
+        <a href="materials.html" class="btn-press inline-flex items-center gap-2 bg-bc-800 hover:bg-bc-700 text-white font-bold px-8 py-3.5 rounded-xl text-lg transition">
+          <i class="fas fa-store"></i> Start Shopping
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-bc-900 text-green-200 py-8 mt-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      <a href="index.html" class="flex items-center gap-2 text-white font-bold text-lg">
+        <span class="bg-bc-400 w-7 h-7 rounded-lg flex items-center justify-center text-bc-900"><i class="fas fa-hard-hat"></i></span>
+        Build<span class="text-amber-400">Cart</span>
+      </a>
+      <p class="text-sm">From Foundation to Finish, We've Got You &bull; Nairobi, Kenya</p>
+      <a href="https://wa.me/254712345678" target="_blank" class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-500 text-white font-semibold px-4 py-2 rounded-lg text-sm transition">
+        <i class="fab fa-whatsapp"></i> WhatsApp Us
+      </a>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/254712345678?text=Hi%20BuildCart%2C%20I%20need%20help%20with%20my%20order" target="_blank" class="whatsapp-float fixed bottom-6 right-6 bg-green-600 hover:bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-2xl z-40 transition">
+    <i class="fab fa-whatsapp text-2xl"></i>
+  </a>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    const statusConfig = {
+      'placed':      { label: 'Order Placed',    color: 'bg-blue-100 text-blue-800',  icon: 'fa-receipt' },
+      'confirmed':   { label: 'Confirmed',       color: 'bg-yellow-100 text-yellow-800', icon: 'fa-check' },
+      'processing':  { label: 'Processing',      color: 'bg-amber-100 text-amber-800',  icon: 'fa-cog' },
+      'shipped':     { label: 'Shipped',         color: 'bg-purple-100 text-purple-800', icon: 'fa-truck' },
+      'delivered':   { label: 'Delivered',       color: 'bg-green-100 text-green-800',  icon: 'fa-check-double' },
+      'cancelled':   { label: 'Cancelled',       color: 'bg-red-100 text-red-800',     icon: 'fa-times' },
+    };
+
+    function renderOrders() {
+      const orders = OrderTracker.getOrders();
+      const listEl = document.getElementById('orders-list');
+      const noOrdersEl = document.getElementById('no-orders');
+
+      if (orders.length === 0) {
+        listEl.classList.add('hidden');
+        noOrdersEl.classList.remove('hidden');
+        return;
+      }
+
+      listEl.classList.remove('hidden');
+      noOrdersEl.classList.add('hidden');
+
+      listEl.innerHTML = orders.map(order => {
+        const sc = statusConfig[order.status] || statusConfig['placed'];
+        const itemsList = order.items.map(item =>
+          `<div class="flex justify-between py-1.5 text-sm">
+            <span class="text-gray-600">${item.name} × ${item.qty}</span>
+            <span class="text-gray-900 font-medium">${formatKES(item.price * item.qty)}</span>
+          </div>`
+        ).join('');
+
+        const timeline = (order.statusHistory || [{ status: order.status, timestamp: order.date }]).map(s => {
+          const ssc = statusConfig[s.status] || statusConfig['placed'];
+          const time = new Date(s.timestamp).toLocaleString('en-KE', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+          return `<div class="flex items-center gap-2 text-sm">
+            <i class="fas ${ssc.icon} ${ssc.color.includes('green') ? 'text-green-600' : 'text-gray-400'}"></i>
+            <span class="${ssc.color.includes('green') ? 'font-semibold text-green-800' : 'text-gray-500'}">${ssc.label}</span>
+            <span class="text-gray-400 ml-auto">${time}</span>
+          </div>`;
+        }).join('');
+
+        return `
+          <div class="bg-white rounded-xl shadow-sm border border-gray-100 mb-4 overflow-hidden">
+            <div class="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
+              <div>
+                <h3 class="font-bold text-gray-900">Order #${order.id}</h3>
+                <p class="text-xs text-gray-500">${new Date(order.date).toLocaleDateString('en-KE', { weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' })}</p>
+              </div>
+              <span class="px-3 py-1 rounded-full text-xs font-bold ${sc.color}">
+                <i class="fas ${sc.icon} mr-1"></i>${sc.label}
+              </span>
+            </div>
+            <div class="px-5 py-4">
+              ${itemsList}
+              <div class="border-t border-gray-100 pt-3 mt-3 flex justify-between font-bold">
+                <span>Total</span>
+                <span class="text-bc-800">${formatKES(order.total)}</span>
+              </div>
+              <div class="mt-4">
+                <p class="text-xs font-semibold text-gray-500 mb-2">STATUS TIMELINE</p>
+                ${timeline}
+              </div>
+              <div class="flex items-center gap-3 mt-4">
+                <a href="https://wa.me/254712345678?text=Hi%20BuildCart%2C%20I%20need%20an%20update%20on%20order%20%23${order.id}" target="_blank" class="bg-green-600 hover:bg-green-500 text-white font-medium px-4 py-2 rounded-lg text-sm transition inline-flex items-center gap-2">
+                  <i class="fab fa-whatsapp"></i> Track via WhatsApp
+                </a>
+                <span class="text-xs text-gray-500"><i class="fas fa-truck text-gray-400 mr-1"></i> ${order.payment === 'cod' ? 'Pay on Delivery' : 'M-Pesa'}</span>
+              </div>
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    renderOrders();
+  </script>
+  <script src="js/pwa.js"></script>
+</body>
+</html>

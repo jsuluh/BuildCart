@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#166534">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="BuildCart">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <title>Checkout — BuildCart Kenya</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{colors:{bc:{'50':'#f0fdf4','100':'#dcfce7','200':'#bbf7d0','300':'#86efac','400':'#4ade80','500':'#22c55e','600':'#16a34a','700':'#15803d','800':'#166534','900':'#14532d'},amber:{'400':'#fbbf24','500':'#f59e0b'}}}}}</script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+  <!-- NAVBAR -->
+  <nav class="bg-bc-800 shadow-lg sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center justify-between h-16">
+        <a href="index.html" class="flex items-center gap-2 text-white font-bold text-xl tracking-tight">
+          <span class="bg-bc-400 w-9 h-9 rounded-lg flex items-center justify-center text-bc-900"><i class="fas fa-hard-hat"></i></span>
+          Build<span class="text-amber-400">Cart</span>
+        </a>
+        <div class="flex items-center gap-4">
+          <div class="flex items-center gap-2 text-green-200 text-sm font-medium">
+            <i class="fas fa-lock"></i> Secure Checkout
+          </div>
+          <button onclick="SwahiliToggle.toggle(); location.reload();" class="text-sm text-gray-200 hover:text-white font-medium px-3 py-1 rounded-lg border border-green-700 hover:border-green-500 transition">🇰🇪 SW</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PROGRESS STEPS -->
+  <div class="bg-white border-b border-gray-100">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 py-4">
+      <div class="flex items-center justify-center gap-2 text-sm">
+        <span class="flex items-center gap-2 text-bc-800 font-bold"><span class="w-7 h-7 bg-bc-800 text-white rounded-full flex items-center justify-center text-xs font-bold">1</span> Delivery</span>
+        <i class="fas fa-chevron-right text-gray-300"></i>
+        <span class="flex items-center gap-2 text-gray-400" id="step-2"><span class="w-7 h-7 bg-gray-200 text-gray-400 rounded-full flex items-center justify-center text-xs font-bold">2</span> Payment</span>
+        <i class="fas fa-chevron-right text-gray-300"></i>
+        <span class="flex items-center gap-2 text-gray-400" id="step-3"><span class="w-7 h-7 bg-gray-200 text-gray-400 rounded-full flex items-center justify-center text-xs font-bold">3</span> Confirm</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHECKOUT FORM -->
+  <section class="py-8">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      <div class="lg:flex gap-8">
+        <!-- Form -->
+        <div class="lg:w-2/3 mb-8 lg:mb-0">
+          <form id="checkout-form" onsubmit="placeOrder(event)">
+
+            <!-- Delivery Details -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-6">
+              <h2 class="font-bold text-lg text-gray-900 mb-5 flex items-center gap-2">
+                <i class="fas fa-truck text-bc-600"></i> Delivery Details
+              </h2>
+              <div class="grid md:grid-cols-2 gap-5">
+                <div>
+                  <label class="font-semibold text-sm text-gray-700 mb-1.5 block">Full Name *</label>
+                  <input type="text" id="c-name" required placeholder="e.g. John Mwangi" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm">
+                </div>
+                <div>
+                  <label class="font-semibold text-sm text-gray-700 mb-1.5 block">Phone Number *</label>
+                  <input type="tel" id="c-phone" required placeholder="07XX XXX XXX" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm">
+                </div>
+              </div>
+              <div class="mt-5">
+                <label class="font-semibold text-sm text-gray-700 mb-1.5 block">Delivery Address *</label>
+                <input type="text" id="c-address" required placeholder="e.g. 123 Kenyatta Ave, Westlands, Nairobi" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm">
+              </div>
+              <div class="mt-5">
+                <label class="font-semibold text-sm text-gray-700 mb-1.5 block">Preferred Delivery Window</label>
+                <select id="c-window" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm">
+                  <option value="any">Any time (1–3 business days)</option>
+                  <option value="morning">Morning (8am – 12pm)</option>
+                  <option value="afternoon">Afternoon (12pm – 5pm)</option>
+                </select>
+              </div>
+              <div class="mt-5">
+                <label class="font-semibold text-sm text-gray-700 mb-1.5 block">Order Notes (optional)</label>
+                <textarea id="c-notes" rows="2" placeholder="Any special instructions for delivery..." class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm"></textarea>
+              </div>
+            </div>
+
+            <!-- Payment Method -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-6">
+              <h2 class="font-bold text-lg text-gray-900 mb-5 flex items-center gap-2">
+                <i class="fas fa-credit-card text-bc-600"></i> Payment Method
+              </h2>
+              <div class="space-y-3">
+                <label class="flex items-center gap-4 p-4 rounded-xl border-2 border-bc-800 bg-bc-50 cursor-pointer">
+                  <input type="radio" name="payment" value="mpesa" checked class="accent-bc-600 w-5 h-5">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center text-white font-bold text-xs">M</div>
+                    <div>
+                      <p class="font-bold text-gray-900 text-sm">M-Pesa</p>
+                      <p class="text-xs text-gray-500">Pay via M-Pesa on your phone</p>
+                    </div>
+                  </div>
+                </label>
+                <label class="flex items-center gap-4 p-4 rounded-xl border-2 border-gray-200 hover:border-bc-400 cursor-pointer transition">
+                  <input type="radio" name="payment" value="cod" class="accent-bc-600 w-5 h-5">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-amber-500 rounded-lg flex items-center justify-center text-bc-900 font-bold text-xs">C</div>
+                    <div>
+                      <p class="font-bold text-gray-900 text-sm">Cash / M-Pesa on Delivery</p>
+                      <p class="text-xs text-gray-500">Pay when your order arrives</p>
+                    </div>
+                  </div>
+                </label>
+              </div>
+
+              <!-- M-Pesa phone (shown when M-Pesa selected) -->
+              <div id="mpesa-phone-section" class="mt-5">
+                <label class="font-semibold text-sm text-gray-700 mb-1.5 block">M-Pesa Phone Number *</label>
+                <input type="tel" id="c-mpesa-phone" placeholder="07XX XXX XXX" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm">
+                <p class="text-xs text-gray-500 mt-2"><i class="fas fa-info-circle text-bc-600"></i> You'll receive an M-Pesa STK push prompt on this number</p>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-press w-full bg-bc-800 hover:bg-bc-700 text-white font-bold py-4 rounded-xl text-lg transition flex items-center justify-center gap-2">
+              <i class="fas fa-lock"></i> Place Order
+            </button>
+          </form>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="lg:w-1/3">
+          <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 sticky top-24">
+            <h3 class="font-bold text-lg text-gray-900 mb-4">Order Summary</h3>
+            <div class="divide-y divide-gray-100 mb-4" id="checkout-items">
+            </div>
+            <div class="border-t border-gray-200 pt-4 space-y-2">
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Subtotal</span>
+                <span class="font-semibold text-gray-900 price-tag" id="co-subtotal">KES 0</span>
+              </div>
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Delivery</span>
+                <span class="font-semibold" id="co-delivery">Calculated after</span>
+              </div>
+              <div class="flex justify-between text-lg font-extrabold pt-2 border-t border-gray-100">
+                <span>Total</span>
+                <span class="text-bc-800 price-tag" id="co-total">KES 0</span>
+              </div>
+            </div>
+
+            <!-- Trust signals -->
+            <div class="mt-6 space-y-2 text-xs text-gray-500">
+              <div class="flex items-center gap-2"><i class="fas fa-shield-alt text-bc-600"></i> eTIMS compliant materials</div>
+              <div class="flex items-center gap-2"><i class="fas fa-mobile-alt text-bc-600"></i> Safe M-Pesa payments</div>
+              <div class="flex items-center gap-2"><i class="fas fa-truck text-bc-600"></i> Nairobi Metro delivery (1–3 days)</div>
+              <div class="flex items-center gap-2"><i class="fab fa-whatsapp text-green-600"></i> Updates via WhatsApp</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ORDER SUCCESS (hidden) -->
+  <section id="order-success" class="hidden py-20">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6 text-center">
+      <div class="w-20 h-20 bg-bc-100 rounded-full flex items-center justify-center mx-auto mb-6">
+        <i class="fas fa-check-circle text-bc-600 text-4xl"></i>
+      </div>
+      <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-3">Order Placed Successfully!</h1>
+      <p class="text-gray-600 text-lg mb-2">Thank you for building with BuildCart. Your order <strong id="order-id" class="text-bc-800">#BC-000000</strong> has been received.</p>
+      <p class="text-gray-500 mb-8" id="order-msg">You will receive an M-Pesa payment prompt shortly. We'll also send order updates via WhatsApp.</p>
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <a href="index.html" class="btn-press bg-bc-800 hover:bg-bc-700 text-white font-bold px-8 py-3.5 rounded-xl transition inline-flex items-center justify-center gap-2">
+          <i class="fas fa-home"></i> Back to Home
+        </a>
+        <a href="https://wa.me/254712345678?text=Hi%20BuildCart%2C%20I%20just%20placed%20an%20order" target="_blank" class="btn-press bg-green-600 hover:bg-green-500 text-white font-bold px-8 py-3.5 rounded-xl transition inline-flex items-center justify-center gap-2">
+          <i class="fab fa-whatsapp text-xl"></i> Chat on WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-bc-900 text-green-200 py-8 mt-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      <a href="index.html" class="flex items-center gap-2 text-white font-bold text-lg">
+        <span class="bg-bc-400 w-7 h-7 rounded-lg flex items-center justify-center text-bc-900"><i class="fas fa-hard-hat"></i></span>
+        Build<span class="text-amber-400">Cart</span>
+      </a>
+      <p class="text-sm">From Foundation to Finish, We've Got You &bull; Nairobi, Kenya</p>
+      <a href="https://wa.me/254712345678" target="_blank" class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-500 text-white font-semibold px-4 py-2 rounded-lg text-sm transition">
+        <i class="fab fa-whatsapp"></i> WhatsApp Us
+      </a>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    // Render cart summary
+    function renderCheckoutSummary() {
+      const items = Cart.getItems();
+      if (items.length === 0) {
+        window.location.href = 'cart.html';
+        return;
+      }
+
+      const listEl = document.getElementById('checkout-items');
+      listEl.innerHTML = items.map(item => `
+        <div class="flex justify-between py-2.5">
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium text-gray-900 truncate">${item.name}</p>
+            <p class="text-xs text-gray-500">${item.brand} × ${item.qty}</p>
+          </div>
+          <span class="text-sm font-semibold text-gray-900 price-tag ml-4">${formatKES(item.price * item.qty)}</span>
+        </div>
+      `).join('');
+
+      const subtotal = Cart.getTotal();
+      const deliveryFee = subtotal >= 50000 ? 0 : 2500;
+
+      document.getElementById('co-subtotal').textContent = formatKES(subtotal);
+      document.getElementById('co-delivery').textContent = deliveryFee === 0 ? 'FREE' : formatKES(deliveryFee);
+      document.getElementById('co-total').textContent = formatKES(subtotal + deliveryFee);
+    }
+
+    renderCheckoutSummary();
+
+    // Payment method toggle
+    document.querySelectorAll('input[name="payment"]').forEach(radio => {
+      radio.addEventListener('change', (e) => {
+        const mpesaSection = document.getElementById('mpesa-phone-section');
+        mpesaSection.style.display = e.target.value === 'mpesa' ? 'block' : 'none';
+      });
+      // Style active card
+      radio.addEventListener('change', () => {
+        document.querySelectorAll('input[name="payment"]').forEach(r => {
+          const label = r.closest('label');
+          label.className = label.className.replace(/border-\S+/g, '');
+          if (r.checked) {
+            label.classList.add('border-2', 'border-bc-800', 'bg-bc-50');
+            label.classList.remove('border-gray-200');
+          } else {
+            label.classList.add('border-2', 'border-gray-200');
+            label.classList.remove('border-bc-800', 'bg-bc-50');
+          }
+        });
+      });
+    });
+
+    // Place order
+    function placeOrder(e) {
+      e.preventDefault();
+
+      const name = document.getElementById('c-name').value;
+      const phone = document.getElementById('c-phone').value;
+      const address = document.getElementById('c-address').value;
+      const window_ = document.getElementById('c-window').value;
+      const payment = document.querySelector('input[name="payment"]:checked').value;
+      const mpesaPhone = document.getElementById('c-mpesa-phone').value || phone;
+      const notes = document.getElementById('c-notes').value;
+
+      // Validate
+      if (payment === 'mpesa' && !mpesaPhone) {
+        showToast('Please enter your M-Pesa phone number', 'error');
+        return;
+      }
+
+      const items = Cart.getItems();
+      if (items.length === 0) {
+        showToast('Your cart is empty', 'error');
+        return;
+      }
+
+      const subtotal = Cart.getTotal();
+      const deliveryFee = subtotal >= 50000 ? 0 : 2500;
+      const total = subtotal + deliveryFee;
+
+      // Build order object
+      const order = {
+        id: 'BC-' + Date.now().toString(36).toUpperCase(),
+        customerName: name,
+        customerPhone: phone,
+        customerMpesaPhone: mpesaPhone,
+        deliveryAddress: address,
+        deliveryWindow: window_,
+        paymentMethod: payment,
+        items: items.map(i => ({ id: i.id, name: i.name, brand: i.brand, qty: i.qty, price: i.price })),
+        subtotal,
+        deliveryFee,
+        total,
+        notes,
+        status: 'placed',
+        statusHistory: [{ status: 'placed', timestamp: new Date().toISOString() }],
+        date: new Date().toISOString()
+      };
+
+      // Save order via OrderTracker (localStorage)
+      OrderTracker.saveOrder(order);
+
+      // Try to POST to backend API as well (if server is running)
+      const API_BASE = window.location.origin;
+      fetch(`${API_BASE}/api/orders`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customerName: name,
+          customerPhone: phone,
+          customerEmail: '',
+          items: order.items,
+          paymentMethod: payment,
+          deliveryAddress: address,
+          notes
+        })
+      }).then(res => res.json()).then(data => {
+        if (data.success && data.order) {
+          console.log('✅ Order saved to backend:', data.order.id);
+          // If M-Pesa, trigger STK Push
+          if (payment === 'mpesa') {
+            triggerMpesaSTK(mpesaPhone, total, data.order.id);
+          }
+        }
+      }).catch(err => {
+        console.warn('Backend not available, order saved locally only:', err);
+      });
+
+      // If M-Pesa and no backend, simulate STK push
+      if (payment === 'mpesa') {
+        showToast('M-Pesa payment prompt sent to ' + mpesaPhone, 'success');
+      }
+
+      // Show success
+      document.querySelector('section.py-8').classList.add('hidden');
+      document.querySelector('.bg-white.border-b.border-gray-100').classList.add('hidden');
+      const successSection = document.getElementById('order-success');
+      successSection.classList.remove('hidden');
+
+      document.getElementById('order-id').textContent = '#' + order.id;
+
+      if (payment === 'cod') {
+        document.getElementById('order-msg').textContent = 'You selected Cash/M-Pesa on Delivery. Please have payment ready when your order arrives within 1–3 business days. Delivery fee: ' + formatKES(deliveryFee);
+      } else {
+        document.getElementById('order-msg').textContent = 'An M-Pesa payment prompt has been sent to ' + mpesaPhone + '. Please enter your PIN to complete payment of ' + formatKES(total) + '. We will also send order updates via WhatsApp.';
+      }
+
+      // Clear cart
+      Cart.clear();
+      updateCartBadge();
+    }
+
+    // Trigger M-Pesa STK Push via backend
+    async function triggerMpesaSTK(phone, amount, orderId) {
+      try {
+        const res = await fetch(`${API_BASE || window.location.origin}/api/mpesa/stkpush`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phone, amount, orderId, accountRef: orderId })
+        });
+        const data = await res.json();
+        if (data.success) {
+          console.log('✅ M-Pesa STK Push initiated:', data.CheckoutRequestID);
+          showToast('M-Pesa prompt sent! Check your phone.', 'success');
+        } else {
+          console.warn('M-Pesa STK Push failed:', data.error);
+        }
+      } catch (err) {
+        console.warn('M-Pesa API not available (server not running?):', err);
+      }
+    }
+  </script>
+  <script src="js/pwa.js"></script>
+</body>
+</html>

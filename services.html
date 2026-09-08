@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#166534">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="BuildCart">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <title>Hire a Fundi — BuildCart Kenya</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{colors:{bc:{'50':'#f0fdf4','100':'#dcfce7','200':'#bbf7d0','300':'#86efac','400':'#4ade80','500':'#22c55e','600':'#16a34a','700':'#15803d','800':'#166534','900':'#14532d'},amber:{'400':'#fbbf24','500':'#f59e0b'}}}}}</script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+  <!-- NAVBAR -->
+  <nav class="bg-bc-800 shadow-lg sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center justify-between h-16">
+        <a href="index.html" class="flex items-center gap-2 text-white font-bold text-xl tracking-tight">
+          <span class="bg-bc-400 w-9 h-9 rounded-lg flex items-center justify-center text-bc-900"><i class="fas fa-hard-hat"></i></span>
+          Build<span class="text-amber-400">Cart</span>
+        </a>
+        <div class="hidden md:flex items-center gap-5">
+          <a href="materials.html" class="text-gray-200 hover:text-white font-medium text-sm transition">Materials</a>
+          <a href="services.html" class="text-white font-medium text-sm">Hire a Fundi</a>
+          <a href="calculator.html" class="text-gray-200 hover:text-white font-medium text-sm transition"><i class="fas fa-calculator mr-1"></i>Calculator</a>
+          <a href="orders.html" class="text-gray-200 hover:text-white font-medium text-sm transition"><i class="fas fa-box mr-1"></i>Orders</a>
+          <button onclick="SwahiliToggle.toggle(); location.reload();" class="text-sm text-gray-200 hover:text-white font-medium px-3 py-1 rounded-lg border border-green-700 hover:border-green-500 transition">🇰🇪 SW</button>
+          <a href="cart.html" class="relative text-gray-200 hover:text-white transition p-2">
+            <i class="fas fa-shopping-cart text-lg"></i>
+            <span id="cart-badge" class="absolute -top-1 -right-1 bg-amber-500 text-bc-900 text-xs font-bold rounded-full w-5 h-5 items-center justify-center" style="display:none">0</span>
+          </a>
+        </div>
+        <div class="md:hidden flex items-center gap-2">
+          <button onclick="SwahiliToggle.toggle(); location.reload();" class="text-sm text-gray-200 font-medium px-2 py-1 rounded-lg border border-green-700">🇰🇪</button>
+          <a href="cart.html" class="relative text-gray-200 p-2">
+            <i class="fas fa-shopping-cart text-lg"></i>
+            <span id="cart-badge" class="absolute -top-1 -right-1 bg-amber-500 text-bc-900 text-xs font-bold rounded-full w-5 h-5 items-center justify-center" style="display:none">0</span>
+          </a>
+          <button onclick="toggleMobileMenu()" class="text-gray-200 p-2"><i class="fas fa-bars text-xl"></i></button>
+        </div>
+      </div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-bc-900 border-t border-bc-700">
+      <div class="px-4 py-3 space-y-2">
+        <a href="materials.html" class="block text-gray-200 hover:text-white py-2 font-medium">Materials</a>
+        <a href="services.html" class="block text-white py-2 font-medium">Hire a Fundi</a>
+        <a href="calculator.html" class="block text-gray-200 hover:text-white py-2 font-medium"><i class="fas fa-calculator mr-1"></i>Calculator</a>
+        <a href="orders.html" class="block text-gray-200 hover:text-white py-2 font-medium"><i class="fas fa-box mr-1"></i>Orders</a>
+        <a href="cart.html" class="block text-gray-200 hover:text-white py-2 font-medium">Cart</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <section class="bg-gradient-to-r from-amber-600 to-amber-500 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center gap-3 mb-2">
+        <a href="index.html" class="text-amber-100 hover:text-white text-sm"><i class="fas fa-home"></i></a>
+        <i class="fas fa-chevron-right text-amber-200 text-xs"></i>
+        <span class="text-amber-100 text-sm">Supply & Fix</span>
+      </div>
+      <h1 class="text-3xl md:text-4xl font-extrabold text-bc-900 mb-2">Hire a Vetted Fundi</h1>
+      <p class="text-amber-900/80">Licensed, rated professionals for every trade — plumbing, tiling, electrical, painting, roofing & more</p>
+    </div>
+  </section>
+
+  <!-- SERVICE CATEGORIES -->
+  <section class="py-8 bg-white border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="flex flex-wrap gap-3" id="service-tabs">
+      </div>
+    </div>
+  </section>
+
+  <!-- FUNDIS GRID -->
+  <section class="py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center justify-between mb-6">
+        <p class="text-sm text-gray-600" id="fundi-count">Showing 0 fundis</p>
+        <a href="#quote-form" class="btn-press bg-amber-500 hover:bg-amber-400 text-bc-900 font-semibold px-5 py-2 rounded-lg text-sm transition inline-flex items-center gap-2">
+          <i class="fas fa-file-alt"></i> Request a Quote
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="fundi-grid">
+      </div>
+
+      <div id="empty-fundi" class="hidden text-center py-16">
+        <i class="fas fa-user-slash text-gray-300 text-5xl mb-4"></i>
+        <h3 class="text-xl font-bold text-gray-400 mb-2">No fundis found for this trade</h3>
+        <p class="text-gray-400 mb-4">Try selecting a different service category</p>
+        <a href="services.html" class="bg-bc-800 text-white font-semibold px-6 py-2.5 rounded-lg">View All Fundis</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUOTE REQUEST FORM -->
+  <section id="quote-form" class="py-12 bg-gradient-to-br from-bc-800 to-bc-900">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-8">
+        <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-3">Request a Quote</h2>
+        <p class="text-green-200">Tell us what you need and we'll connect you with the right fundi</p>
+      </div>
+
+      <form id="quote-form-el" class="bg-white rounded-2xl shadow-xl p-6 md:p-8 space-y-5" onsubmit="submitQuote(event)">
+        <div class="grid md:grid-cols-2 gap-5">
+          <div>
+            <label class="font-semibold text-sm text-gray-700 mb-1.5 block">Service Type *</label>
+            <select id="q-service" required class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm">
+              <option value="">Select a service</option>
+              <option value="Plumbing">Plumbing</option>
+              <option value="Tiling">Tiling</option>
+              <option value="Electrical">Electrical</option>
+              <option value="Painting">Painting</option>
+              <option value="Roofing Installation">Roofing Installation</option>
+              <option value="General Handyman">General Handyman</option>
+            </select>
+          </div>
+          <div>
+            <label class="font-semibold text-sm text-gray-700 mb-1.5 block">Your Name *</label>
+            <input type="text" id="q-name" required placeholder="e.g. John Mwangi" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm">
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-5">
+          <div>
+            <label class="font-semibold text-sm text-gray-700 mb-1.5 block">Phone Number *</label>
+            <input type="tel" id="q-phone" required placeholder="07XX XXX XXX" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm">
+          </div>
+          <div>
+            <label class="font-semibold text-sm text-gray-700 mb-1.5 block">Location / Area *</label>
+            <input type="text" id="q-location" required placeholder="e.g. Westlands, Nairobi" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm">
+          </div>
+        </div>
+
+        <div>
+          <label class="font-semibold text-sm text-gray-700 mb-1.5 block">Project Description *</label>
+          <textarea id="q-description" required rows="4" placeholder="Describe your project — what needs to be done, size of the area, any specific requirements..." class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm"></textarea>
+        </div>
+
+        <div>
+          <label class="font-semibold text-sm text-gray-700 mb-2 block">Do you also need building materials?</label>
+          <div class="flex gap-4">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="q-materials" value="yes" class="accent-bc-600">
+              <span class="text-sm">Yes — I need materials too</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="q-materials" value="no" class="accent-bc-600" checked>
+              <span class="text-sm">No — I have my own materials</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="pt-2 flex flex-col sm:flex-row gap-3">
+          <button type="submit" class="btn-press flex-1 bg-bc-800 hover:bg-bc-700 text-white font-bold py-3.5 rounded-xl text-lg transition flex items-center justify-center gap-2">
+            <i class="fas fa-paper-plane"></i> Submit Quote Request
+          </button>
+          <a href="https://wa.me/254712345678?text=Hi%20BuildCart%2C%20I%20need%20a%20quote%20for%20installation%20services" target="_blank" class="btn-press bg-green-600 hover:bg-green-500 text-white font-bold py-3.5 px-6 rounded-xl text-lg transition flex items-center justify-center gap-2">
+            <i class="fab fa-whatsapp text-xl"></i> Chat Instead
+          </a>
+        </div>
+      </form>
+
+      <!-- Success message (hidden) -->
+      <div id="quote-success" class="hidden bg-white rounded-2xl shadow-xl p-8 text-center">
+        <div class="w-16 h-16 bg-bc-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <i class="fas fa-check-circle text-bc-600 text-3xl"></i>
+        </div>
+        <h3 class="text-2xl font-extrabold text-gray-900 mb-2">Quote Request Sent!</h3>
+        <p class="text-gray-600 mb-6">We'll review your request and connect you with a suitable fundi within 24 hours. You'll receive a confirmation via SMS/WhatsApp.</p>
+        <div class="flex flex-col sm:flex-row justify-center gap-3">
+          <a href="index.html" class="btn-press bg-bc-800 hover:bg-bc-700 text-white font-bold px-6 py-3 rounded-xl transition">Back to Home</a>
+          <a href="https://wa.me/254712345678" target="_blank" class="btn-press bg-green-600 hover:bg-green-500 text-white font-bold px-6 py-3 rounded-xl transition inline-flex items-center gap-2">
+            <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-bc-900 text-green-200 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      <a href="index.html" class="flex items-center gap-2 text-white font-bold text-lg">
+        <span class="bg-bc-400 w-7 h-7 rounded-lg flex items-center justify-center text-bc-900"><i class="fas fa-hard-hat"></i></span>
+        Build<span class="text-amber-400">Cart</span>
+      </a>
+      <p class="text-sm">From Foundation to Finish, We've Got You &bull; Nairobi, Kenya</p>
+      <a href="https://wa.me/254712345678" target="_blank" class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-500 text-white font-semibold px-4 py-2 rounded-lg text-sm transition">
+        <i class="fab fa-whatsapp"></i> WhatsApp Us
+      </a>
+    </div>
+  </footer>
+
+  <!-- WhatsApp float -->
+  <a href="https://wa.me/254712345678?text=Hi%20BuildCart%2C%20I%20need%20a%20fundi%20for%20my%20project" target="_blank" class="whatsapp-float fixed bottom-6 right-6 bg-green-600 hover:bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-2xl z-40 transition">
+    <i class="fab fa-whatsapp text-2xl"></i>
+  </a>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    const data = window.BUILDCART_DATA;
+    const params = new URLSearchParams(window.location.search);
+    const activeTrade = params.get('trade') || '';
+
+    // Set initial service in form
+    if (activeTrade) {
+      const tradeNames = { plumbing: 'Plumbing', tiling: 'Tiling', electrical: 'Electrical', painting: 'Painting', roofing: 'Roofing Installation', handyman: 'General Handyman' };
+      const sel = document.getElementById('q-service');
+      if (tradeNames[activeTrade]) sel.value = tradeNames[activeTrade];
+    }
+
+    // Service category tabs
+    const tabsContainer = document.getElementById('service-tabs');
+    const allTab = `<a href="services.html" class="px-4 py-2 rounded-lg text-sm font-medium transition ${!activeTrade ? 'bg-bc-800 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}">All</a>`;
+    tabsContainer.innerHTML = allTab;
+    data.SERVICE_CATEGORIES.forEach(sc => {
+      const isActive = activeTrade === sc.id;
+      tabsContainer.innerHTML += `<a href="services.html?trade=${sc.id}" class="px-4 py-2 rounded-lg text-sm font-medium transition ${isActive ? 'bg-bc-800 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'} flex items-center gap-2"><i class="fas ${sc.icon}"></i>${sc.name}</a>`;
+    });
+
+    // Render fundis
+    function renderFundis() {
+      const fundis = getFilteredFundis();
+      const grid = document.getElementById('fundi-grid');
+      const empty = document.getElementById('empty-fundi');
+      const count = document.getElementById('fundi-count');
+
+      count.textContent = `Showing ${fundis.length} fundi${fundis.length !== 1 ? 's' : ''}`;
+
+      if (fundis.length === 0) {
+        grid.classList.add('hidden');
+        empty.classList.remove('hidden');
+        return;
+      }
+
+      grid.classList.remove('hidden');
+      empty.classList.add('hidden');
+
+      grid.innerHTML = fundis.map(f => `
+        <div class="fundi-card bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+          <div class="p-5">
+            <div class="flex items-start gap-4 mb-4">
+              <img src="${f.avatar}" alt="${f.name}" class="w-16 h-16 rounded-full object-cover border-2 ${f.verified ? 'border-bc-400' : 'border-gray-200'}">
+              <div class="flex-1">
+                <div class="flex items-center gap-2">
+                  <h3 class="font-bold text-gray-900">${f.name}</h3>
+                  ${f.verified ? '<span class="bg-bc-100 text-bc-800 text-xs font-semibold px-2 py-0.5 rounded-full"><i class="fas fa-check-circle"></i> Verified</span>' : ''}
+                </div>
+                <p class="text-amber-600 font-medium text-sm">${f.category}</p>
+                <p class="text-gray-500 text-xs mt-0.5">${f.location}</p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2 mb-3">
+              <div class="flex items-center gap-0.5">${starsHTML(f.rating)}</div>
+              <span class="text-sm font-bold text-gray-900">${f.rating}</span>
+              <span class="text-xs text-gray-500">(${f.jobs} jobs)</span>
+            </div>
+
+            <p class="text-gray-600 text-sm mb-4 line-clamp-3">${f.bio}</p>
+
+            <div class="flex items-center gap-4 text-xs text-gray-500 mb-4">
+              <span><i class="fas fa-briefcase text-gray-400"></i> ${f.experience}</span>
+              ${f.licensed ? '<span class="text-bc-700 font-medium"><i class="fas fa-certificate"></i> Licensed</span>' : '<span class="text-gray-400"><i class="fas fa-certificate"></i> Unlicensed</span>'}
+            </div>
+
+            <div class="flex gap-2">
+              <a href="#quote-form" onclick="document.getElementById('q-service').value='${f.category}';document.getElementById('q-description').value='I would like to hire ${f.name} for: '" class="btn-press flex-1 bg-bc-800 hover:bg-bc-700 text-white font-semibold py-2.5 rounded-lg text-sm transition text-center">
+                Request Quote
+              </a>
+              <a href="https://wa.me/254712345678?text=Hi%20BuildCart%2C%20I'm%20interested%20in%20hiring%20${encodeURIComponent(f.name)}%20(${encodeURIComponent(f.category)})" target="_blank" class="btn-press bg-green-600 hover:bg-green-500 text-white font-semibold py-2.5 px-4 rounded-lg text-sm transition flex items-center gap-1.5">
+                <i class="fab fa-whatsapp"></i> Chat
+              </a>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    renderFundis();
+
+    // Quote form submission
+    function submitQuote(e) {
+      e.preventDefault();
+      const form = document.getElementById('quote-form-el');
+      const success = document.getElementById('quote-success');
+
+      // Gather data
+      const service = document.getElementById('q-service').value;
+      const name = document.getElementById('q-name').value;
+      const phone = document.getElementById('q-phone').value;
+      const location = document.getElementById('q-location').value;
+      const desc = document.getElementById('q-description').value;
+      const materials = document.querySelector('input[name="q-materials"]:checked')?.value || 'no';
+
+      // In production, this would POST to a backend. For MVP, we show success.
+      console.log('Quote request:', { service, name, phone, location, desc, materials });
+
+      form.classList.add('hidden');
+      success.classList.remove('hidden');
+    }
+  </script>
+  <script src="js/pwa.js"></script>
+</body>
+</html>

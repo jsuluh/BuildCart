@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#166534">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="BuildCart">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <title>BuildCart — From Foundation to Finish, We've Got You</title>
+  <meta name="description" content="BuildCart: Kenya's one-stop digital marketplace for building materials and vetted professional installers. Buy cement, steel, roofing, plumbing, electrical and more. Book a trusted fundi today.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{colors:{bc:{'50':'#f0fdf4','100':'#dcfce7','200':'#bbf7d0','300':'#86efac','400':'#4ade80','500':'#22c55e','600':'#16a34a','700':'#15803d','800':'#166534','900':'#14532d'},amber:{'400':'#fbbf24','500':'#f59e0b'}}}}}</script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+  <!-- ====== NAVBAR ====== -->
+  <nav class="bg-bc-800 shadow-lg sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center justify-between h-16">
+        <!-- Logo -->
+        <a href="index.html" class="flex items-center gap-2 text-white font-bold text-xl tracking-tight">
+          <span class="bg-bc-400 w-9 h-9 rounded-lg flex items-center justify-center text-bc-900">
+            <i class="fas fa-hard-hat"></i>
+          </span>
+          Build<span class="text-amber-400">Cart</span>
+        </a>
+
+        <!-- Desktop Nav -->
+        <div class="hidden md:flex items-center gap-5">
+          <a href="materials.html" class="text-gray-200 hover:text-white font-medium text-sm transition">Materials</a>
+          <a href="services.html" class="text-gray-200 hover:text-white font-medium text-sm transition">Hire a Fundi</a>
+          <a href="calculator.html" class="text-gray-200 hover:text-white font-medium text-sm transition"><i class="fas fa-calculator mr-1"></i>Calculator</a>
+          <a href="orders.html" class="text-gray-200 hover:text-white font-medium text-sm transition"><i class="fas fa-box mr-1"></i>Orders</a>
+          <button onclick="SwahiliToggle.toggle(); location.reload();" class="text-sm text-gray-200 hover:text-white font-medium px-3 py-1 rounded-lg border border-green-700 hover:border-green-500 transition">🇰🇪 SW</button>
+          <a href="cart.html" class="relative text-gray-200 hover:text-white transition p-2">
+            <i class="fas fa-shopping-cart text-lg"></i>
+            <span id="cart-badge" class="absolute -top-1 -right-1 bg-amber-500 text-bc-900 text-xs font-bold rounded-full w-5 h-5 items-center justify-center" style="display:none">0</span>
+          </a>
+        </div>
+
+        <!-- Mobile hamburger -->
+        <div class="md:hidden flex items-center gap-2">
+          <button onclick="SwahiliToggle.toggle(); location.reload();" class="text-sm text-gray-200 font-medium px-2 py-1 rounded-lg border border-green-700">🇰🇪</button>
+          <a href="cart.html" class="relative text-gray-200 p-2">
+            <i class="fas fa-shopping-cart text-lg"></i>
+            <span id="cart-badge" class="absolute -top-1 -right-1 bg-amber-500 text-bc-900 text-xs font-bold rounded-full w-5 h-5 items-center justify-center" style="display:none">0</span>
+          </a>
+          <button onclick="toggleMobileMenu()" class="text-gray-200 p-2">
+            <i class="fas fa-bars text-xl"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-bc-900 border-t border-bc-700">
+      <div class="px-4 py-3 space-y-2">
+        <a href="materials.html" class="block text-gray-200 hover:text-white py-2 font-medium">Materials</a>
+        <a href="services.html" class="block text-gray-200 hover:text-white py-2 font-medium">Hire a Fundi</a>
+        <a href="calculator.html" class="block text-gray-200 hover:text-white py-2 font-medium"><i class="fas fa-calculator mr-1"></i>Calculator</a>
+        <a href="orders.html" class="block text-gray-200 hover:text-white py-2 font-medium"><i class="fas fa-box mr-1"></i>Orders</a>
+        <a href="cart.html" class="block text-gray-200 hover:text-white py-2 font-medium">Cart</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ====== HERO ====== -->
+  <section class="hero-gradient hero-pattern relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16 md:py-24 relative z-10">
+      <div class="max-w-3xl">
+        <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-green-200 text-sm font-medium px-4 py-1.5 rounded-full mb-6">
+          <i class="fas fa-map-marker-alt text-amber-400"></i>
+          Nairobi Metro — Delivering in 1–3 Days
+        </div>
+        <h1 class="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-6">
+          From Foundation<br>to Finish,<br>
+          <span class="text-bc-400">We've Got You.</span>
+        </h1>
+        <p class="text-lg md:text-xl text-green-100 mb-8 leading-relaxed max-w-2xl">
+          Buy quality building materials and book vetted, reliable installers — all on one platform. Pay safely with M-Pesa.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="materials.html" class="btn-press inline-flex items-center justify-center gap-2 bg-bc-400 hover:bg-bc-300 text-bc-900 font-bold px-8 py-3.5 rounded-xl text-lg transition shadow-lg shadow-green-900/30">
+            <i class="fas fa-store"></i> Shop Materials
+          </a>
+          <a href="services.html" class="btn-press inline-flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-400 text-bc-900 font-bold px-8 py-3.5 rounded-xl text-lg transition shadow-lg shadow-amber-900/30">
+            <i class="fas fa-user-hard-hat"></i> Hire a Fundi
+          </a>
+        </div>
+      </div>
+    </div>
+    <!-- Decorative shapes -->
+    <div class="absolute -bottom-1 left-0 right-0">
+      <svg viewBox="0 0 1440 120" fill="none" class="w-full"><path d="M0 120L60 105C120 90 240 60 360 52C480 44 600 48 720 56C840 64 960 76 1080 80C1200 84 1320 80 1380 78L1440 76V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="#f9fafb"/></svg>
+    </div>
+  </section>
+
+  <!-- ====== TRUST BAR ====== -->
+  <section class="bg-gray-50 py-8 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6">
+        <div class="trust-badge flex items-center gap-3 bg-white rounded-xl px-4 py-3 shadow-sm border border-gray-100">
+          <i class="fas fa-shield-alt text-bc-600 text-xl"></i>
+          <div><p class="font-semibold text-sm text-gray-900">Verified Suppliers</p><p class="text-xs text-gray-500">Trusted brands only</p></div>
+        </div>
+        <div class="trust-badge flex items-center gap-3 bg-white rounded-xl px-4 py-3 shadow-sm border border-gray-100">
+          <i class="fas fa-file-invoice text-bc-600 text-xl"></i>
+          <div><p class="font-semibold text-sm text-gray-900">eTIMS Compliant</p><p class="text-xs text-gray-500">Legal materials</p></div>
+        </div>
+        <div class="trust-badge flex items-center gap-3 bg-white rounded-xl px-4 py-3 shadow-sm border border-gray-100">
+          <i class="fas fa-star text-bc-600 text-xl"></i>
+          <div><p class="font-semibold text-sm text-gray-900">Vetted Fundis</p><p class="text-xs text-gray-500">Licensed & rated</p></div>
+        </div>
+        <div class="trust-badge flex items-center gap-3 bg-white rounded-xl px-4 py-3 shadow-sm border border-gray-100">
+          <i class="fas fa-mobile-alt text-bc-600 text-xl"></i>
+          <div><p class="font-semibold text-sm text-gray-900">M-Pesa Payments</p><p class="text-xs text-gray-500">Safe & easy</p></div>
+        </div>
+        <div class="trust-badge flex items-center gap-3 bg-white rounded-xl px-4 py-3 shadow-sm border border-gray-100 col-span-2 md:col-span-1">
+          <i class="fas fa-truck text-bc-600 text-xl"></i>
+          <div><p class="font-semibold text-sm text-gray-900">Nairobi Delivery</p><p class="text-xs text-gray-500">1–3 days</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== CATEGORIES ====== -->
+  <section class="py-14 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-3">What Do You Need?</h2>
+        <p class="text-gray-600 text-lg">Everything for your build — from foundation to finish</p>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4" id="category-grid">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== FEATURED PRODUCTS ====== -->
+  <section class="py-14 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center justify-between mb-10">
+        <div>
+          <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2">Popular Materials</h2>
+          <p class="text-gray-600">Best sellers for Nairobi builders</p>
+        </div>
+        <a href="materials.html" class="btn-press hidden sm:inline-flex items-center gap-2 bg-bc-800 hover:bg-bc-700 text-white font-semibold px-6 py-2.5 rounded-lg transition text-sm">
+          View All <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="featured-grid">
+        <!-- Populated by JS -->
+      </div>
+      <div class="mt-8 text-center sm:hidden">
+        <a href="materials.html" class="btn-press inline-flex items-center gap-2 bg-bc-800 hover:bg-bc-700 text-white font-semibold px-6 py-2.5 rounded-lg transition text-sm">
+          View All Materials <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== SUPPLY & FIX HIGHLIGHT ====== -->
+  <section class="py-14 bg-gradient-to-br from-bc-800 to-bc-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <div class="inline-flex items-center gap-2 bg-amber-500/20 text-amber-300 text-sm font-medium px-4 py-1.5 rounded-full mb-6">
+            <i class="fas fa-tools"></i> Supply & Fix
+          </div>
+          <h2 class="text-3xl md:text-5xl font-extrabold text-white mb-6 leading-tight">
+            Buy Materials.<br>Book the Fundi.<br>
+            <span class="text-amber-400">Done.</span>
+          </h2>
+          <p class="text-green-100 text-lg mb-6 leading-relaxed">
+            Don't juggle suppliers and contractors separately. BuildCart connects you with vetted, rated professionals who install what you buy — all coordinated through one platform.
+          </p>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-center gap-3 text-green-100">
+              <i class="fas fa-check-circle text-bc-400"></i> Licensed & background-checked fundis
+            </li>
+            <li class="flex items-center gap-3 text-green-100">
+              <i class="fas fa-check-circle text-bc-400"></i> Rated by real customers
+            </li>
+            <li class="flex items-center gap-3 text-green-100">
+              <i class="fas fa-check-circle text-bc-400"></i> Materials + installation, one order
+            </li>
+            <li class="flex items-center gap-3 text-green-100">
+              <i class="fas fa-check-circle text-bc-400"></i> WhatsApp coordination for easy comms
+            </li>
+          </ul>
+          <a href="services.html" class="btn-press inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-bc-900 font-bold px-8 py-3.5 rounded-xl text-lg transition">
+            <i class="fas fa-search"></i> Find a Fundi
+          </a>
+        </div>
+        <div class="grid grid-cols-2 gap-4" id="fundi-preview">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== HOW IT WORKS ====== -->
+  <section class="py-14 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-3">How BuildCart Works</h2>
+        <p class="text-gray-600 text-lg">Simple, trusted, convenient</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="text-center">
+          <div class="w-16 h-16 bg-bc-100 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-sm">
+            <i class="fas fa-search text-bc-700 text-2xl"></i>
+          </div>
+          <h3 class="font-bold text-xl mb-2">1. Browse & Select</h3>
+          <p class="text-gray-600">Search our catalog for quality materials — cement, steel, roofing, plumbing, electrical, finishes and more. Filter by category, brand, and price.</p>
+        </div>
+        <div class="text-center">
+          <div class="w-16 h-16 bg-amber-100 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-sm">
+            <i class="fas fa-credit-card text-amber-700 text-2xl"></i>
+          </div>
+          <h3 class="font-bold text-xl mb-2">2. Pay with M-Pesa</h3>
+          <p class="text-gray-600">Checkout with M-Pesa (or Cash/M-Pesa on Delivery). Your order is confirmed instantly. Delivery scheduled within 1–3 days in Nairobi Metro.</p>
+        </div>
+        <div class="text-center">
+          <div class="w-16 h-16 bg-bc-100 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-sm">
+            <i class="fas fa-tools text-bc-700 text-2xl"></i>
+          </div>
+          <h3 class="font-bold text-xl mb-2">3. Build with Confidence</h3>
+          <p class="text-gray-600">Need installation? Book a vetted fundi on the same platform. We coordinate delivery and installation so you build faster and stress-free.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== CTA SECTION ====== -->
+  <section class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+      <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">Ready to Start Building?</h2>
+      <p class="text-gray-600 text-lg mb-8 max-w-2xl mx-auto">Whether you're a homeowner, small contractor, or developer — BuildCart saves you time, money, and hassle. Get everything from one trusted source.</p>
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <a href="materials.html" class="btn-press inline-flex items-center justify-center gap-2 bg-bc-800 hover:bg-bc-700 text-white font-bold px-8 py-3.5 rounded-xl text-lg transition">
+          <i class="fas fa-store"></i> Shop Materials
+        </a>
+        <a href="https://wa.me/254712345678?text=Hi%20BuildCart%2C%20I%20need%20help%20with%20my%20project" target="_blank" class="btn-press inline-flex items-center justify-center gap-2 bg-green-600 hover:bg-green-500 text-white font-bold px-8 py-3.5 rounded-xl text-lg transition">
+          <i class="fab fa-whatsapp text-xl"></i> Chat on WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== FOOTER ====== -->
+  <footer class="bg-bc-900 text-green-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+      <div class="grid md:grid-cols-4 gap-8">
+        <div>
+          <a href="index.html" class="flex items-center gap-2 text-white font-bold text-xl mb-4">
+            <span class="bg-bc-400 w-8 h-8 rounded-lg flex items-center justify-center text-bc-900">
+              <i class="fas fa-hard-hat"></i>
+            </span>
+            Build<span class="text-amber-400">Cart</span>
+          </a>
+          <p class="text-green-200 text-sm mb-4">From Foundation to Finish, We've Got You. Kenya's trusted one-stop digital marketplace for building materials and professional installation services.</p>
+          <a href="https://wa.me/254712345678" target="_blank" class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-500 text-white font-semibold px-4 py-2 rounded-lg text-sm transition">
+            <i class="fab fa-whatsapp"></i> WhatsApp Us
+          </a>
+        </div>
+        <div>
+          <h4 class="text-white font-bold mb-4">Shop</h4>
+          <ul class="space-y-2 text-sm text-green-200">
+            <li><a href="materials.html?category=cement" class="hover:text-white transition">Cement</a></li>
+            <li><a href="materials.html?category=steel" class="hover:text-white transition">Steel & Binding Wire</a></li>
+            <li><a href="materials.html?category=roofing" class="hover:text-white transition">Roofing Sheets</a></li>
+            <li><a href="materials.html?category=plumbing" class="hover:text-white transition">Plumbing</a></li>
+            <li><a href="materials.html?category=electrical" class="hover:text-white transition">Electrical</a></li>
+            <li><a href="materials.html?category=finishes" class="hover:text-white transition">Finishes</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-bold mb-4">Services</h4>
+          <ul class="space-y-2 text-sm text-green-200">
+            <li><a href="services.html?trade=plumbing" class="hover:text-white transition">Plumbing</a></li>
+            <li><a href="services.html?trade=tiling" class="hover:text-white transition">Tiling</a></li>
+            <li><a href="services.html?trade=electrical" class="hover:text-white transition">Electrical</a></li>
+            <li><a href="services.html?trade=painting" class="hover:text-white transition">Painting</a></li>
+            <li><a href="services.html?trade=roofing" class="hover:text-white transition">Roofing Installation</a></li>
+            <li><a href="services.html" class="hover:text-white transition">General Handyman</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-bold mb-4">Company</h4>
+          <ul class="space-y-2 text-sm text-green-200">
+            <li><a href="#" class="hover:text-white transition">About BuildCart</a></li>
+            <li><a href="#" class="hover:text-white transition">Become a Supplier</a></li>
+            <li><a href="#" class="hover:text-white transition">Register as a Fundi</a></li>
+            <li><a href="#" class="hover:text-white transition">Terms of Service</a></li>
+            <li><a href="#" class="hover:text-white transition">Privacy Policy</a></li>
+          </ul>
+          <div class="mt-4 flex gap-3">
+            <a href="#" class="text-green-200 hover:text-white"><i class="fab fa-facebook text-xl"></i></a>
+            <a href="#" class="text-green-200 hover:text-white"><i class="fab fa-twitter text-xl"></i></a>
+            <a href="#" class="text-green-200 hover:text-white"><i class="fab fa-instagram text-xl"></i></a>
+            <a href="#" class="text-green-200 hover:text-white"><i class="fab fa-tiktok text-xl"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-green-800 mt-10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        <p class="text-sm text-green-300">&copy; 2024 BuildCart Kenya. All rights reserved.</p>
+        <div class="flex items-center gap-4 text-sm text-green-300">
+          <span><i class="fas fa-map-marker-alt text-bc-400"></i> Nairobi, Kenya</span>
+          <span><i class="fas fa-phone text-bc-400"></i> 0712 345 678</span>
+          <span><i class="fas fa-envelope text-bc-400"></i> info@buildcart.co.ke</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ====== WHATSAPP FLOAT ====== -->
+  <a href="https://wa.me/254712345678?text=Hi%20BuildCart%2C%20I%20need%20help%20with%20my%20project" target="_blank" class="whatsapp-float fixed bottom-6 right-6 bg-green-600 hover:bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-2xl z-40 transition">
+    <i class="fab fa-whatsapp text-2xl"></i>
+  </a>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    // Render categories
+    const catGrid = document.getElementById('category-grid');
+    BUILDCART_DATA.CATEGORIES.forEach(cat => {
+      catGrid.innerHTML += `
+        <a href="materials.html?category=${cat.id}" class="category-card bg-white rounded-xl p-5 shadow-sm border border-gray-100 text-center cursor-pointer">
+          <div class="cat-icon text-bc-700 text-3xl mb-3"><i class="fas ${cat.icon}"></i></div>
+          <h3 class="font-bold text-gray-900 text-sm mb-1">${cat.name}</h3>
+          <p class="text-xs text-gray-500">${cat.description}</p>
+        </a>`;
+    });
+
+    // Render featured products
+    const featGrid = document.getElementById('featured-grid');
+    const featured = ['cem-001', 'stl-001', 'rof-002', 'plb-001', 'ele-001', 'fin-001', 'blk-001', 'agg-001'];
+    featured.slice(0, 4).forEach(pid => {
+      const p = BUILDCART_DATA.PRODUCTS.find(x => x.id === pid);
+      if (!p) return;
+      featGrid.innerHTML += `
+        <div class="product-card bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+          <a href="product.html?id=${p.id}" class="block">
+            <div class="relative h-48 bg-gray-100 overflow-hidden">
+              <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover hover:scale-105 transition duration-300" loading="lazy">
+              <span class="absolute top-3 left-3 bg-bc-800 text-white text-xs font-semibold px-2.5 py-1 rounded-md">${p.category}</span>
+            </div>
+          </a>
+          <div class="p-4">
+            <p class="text-xs text-gray-500 mb-1">${p.brand}</p>
+            <a href="product.html?id=${p.id}" class="font-semibold text-gray-900 text-sm mb-2 hover:text-bc-700 transition line-clamp-2">${p.name}</a>
+            <div class="flex items-end justify-between mt-3">
+              <div>
+                <p class="text-xl font-bold text-bc-800 price-tag">${formatKES(p.price)}</p>
+                <p class="text-xs text-gray-500">${p.unit}</p>
+              </div>
+              <button onclick='Cart.addItem(BUILDCART_DATA.PRODUCTS.find(p=>p.id==="${p.id}"))' class="btn-press bg-bc-800 hover:bg-bc-700 text-white w-10 h-10 rounded-lg flex items-center justify-center transition">
+                <i class="fas fa-cart-plus"></i>
+              </button>
+            </div>
+          </div>
+        </div>`;
+    });
+
+    // Render fundi preview
+    const fundiPreview = document.getElementById('fundi-preview');
+    BUILDCART_DATA.FUNDIS.slice(0, 4).forEach(f => {
+      fundiPreview.innerHTML += `
+        <a href="services.html" class="fundi-card bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/10 hover:border-amber-400/50 transition">
+          <img src="${f.avatar}" alt="${f.name}" class="w-14 h-14 rounded-full object-cover mb-3 border-2 border-amber-400">
+          <h4 class="font-bold text-white text-sm mb-1">${f.name}</h4>
+          <p class="text-amber-300 text-xs font-medium mb-2">${f.category}</p>
+          <div class="flex items-center gap-1 text-xs text-green-200 mb-1">
+            ${starsHTML(f.rating)}
+            <span class="ml-1">${f.rating}</span>
+          </div>
+          <p class="text-green-300 text-xs">${f.jobs} jobs · ${f.location.split('—')[1]?.trim() || f.location}</p>
+        </a>`;
+    });
+  </script>
+  <script src="js/pwa.js"></script>
+</body>
+</html>

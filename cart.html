@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#166534">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="BuildCart">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <title>Cart — BuildCart Kenya</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{colors:{bc:{'50':'#f0fdf4','100':'#dcfce7','200':'#bbf7d0','300':'#86efac','400':'#4ade80','500':'#22c55e','600':'#16a34a','700':'#15803d','800':'#166534','900':'#14532d'},amber:{'400':'#fbbf24','500':'#f59e0b'}}}}}</script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+  <!-- NAVBAR -->
+  <nav class="bg-bc-800 shadow-lg sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center justify-between h-16">
+        <a href="index.html" class="flex items-center gap-2 text-white font-bold text-xl tracking-tight">
+          <span class="bg-bc-400 w-9 h-9 rounded-lg flex items-center justify-center text-bc-900"><i class="fas fa-hard-hat"></i></span>
+          Build<span class="text-amber-400">Cart</span>
+        </a>
+        <div class="hidden md:flex items-center gap-5">
+          <a href="materials.html" class="text-gray-200 hover:text-white font-medium text-sm transition">Materials</a>
+          <a href="services.html" class="text-gray-200 hover:text-white font-medium text-sm transition">Hire a Fundi</a>
+          <a href="calculator.html" class="text-gray-200 hover:text-white font-medium text-sm transition"><i class="fas fa-calculator mr-1"></i>Calculator</a>
+          <a href="orders.html" class="text-gray-200 hover:text-white font-medium text-sm transition"><i class="fas fa-box mr-1"></i>Orders</a>
+          <button onclick="SwahiliToggle.toggle(); location.reload();" class="text-sm text-gray-200 hover:text-white font-medium px-3 py-1 rounded-lg border border-green-700 hover:border-green-500 transition">🇰🇪 SW</button>
+          <a href="cart.html" class="relative text-white font-medium text-sm p-2">
+            <i class="fas fa-shopping-cart text-lg"></i>
+            <span id="cart-badge" class="absolute -top-1 -right-1 bg-amber-500 text-bc-900 text-xs font-bold rounded-full w-5 h-5 items-center justify-center" style="display:none">0</span>
+          </a>
+        </div>
+        <div class="md:hidden flex items-center gap-2">
+          <button onclick="SwahiliToggle.toggle(); location.reload();" class="text-sm text-gray-200 font-medium px-2 py-1 rounded-lg border border-green-700">🇰🇪</button>
+          <a href="cart.html" class="relative text-white p-2">
+            <i class="fas fa-shopping-cart text-lg"></i>
+            <span id="cart-badge" class="absolute -top-1 -right-1 bg-amber-500 text-bc-900 text-xs font-bold rounded-full w-5 h-5 items-center justify-center" style="display:none">0</span>
+          </a>
+          <button onclick="toggleMobileMenu()" class="text-gray-200 p-2"><i class="fas fa-bars text-xl"></i></button>
+        </div>
+      </div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-bc-900 border-t border-bc-700">
+      <div class="px-4 py-3 space-y-2">
+        <a href="materials.html" class="block text-gray-200 hover:text-white py-2 font-medium">Materials</a>
+        <a href="services.html" class="block text-gray-200 hover:text-white py-2 font-medium">Hire a Fundi</a>
+        <a href="calculator.html" class="block text-gray-200 hover:text-white py-2 font-medium"><i class="fas fa-calculator mr-1"></i>Calculator</a>
+        <a href="orders.html" class="block text-gray-200 hover:text-white py-2 font-medium"><i class="fas fa-box mr-1"></i>Orders</a>
+        <a href="cart.html" class="block text-white py-2 font-medium">Cart</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- CART CONTENT -->
+  <section class="py-8">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center gap-3 mb-2">
+        <a href="index.html" class="text-bc-700 hover:text-bc-800 text-sm"><i class="fas fa-home"></i></a>
+        <i class="fas fa-chevron-right text-gray-300 text-xs"></i>
+        <span class="text-gray-900 font-medium text-sm">Shopping Cart</span>
+      </div>
+      <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-8">Your Cart</h1>
+
+      <div id="cart-content">
+        <!-- Cart with items -->
+        <div class="lg:flex gap-8">
+          <!-- Items list -->
+          <div class="lg:w-2/3 mb-6 lg:mb-0">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100" id="cart-items-list">
+            </div>
+            <div class="mt-4 flex items-center justify-between">
+              <a href="materials.html" class="text-bc-700 hover:text-bc-800 font-medium text-sm flex items-center gap-2">
+                <i class="fas fa-arrow-left"></i> Continue Shopping
+              </a>
+              <button onclick="Cart.clear(); renderCart();" id="clear-cart-btn" class="text-red-500 hover:text-red-600 font-medium text-sm flex items-center gap-2">
+                <i class="fas fa-trash"></i> Clear Cart
+              </button>
+            </div>
+          </div>
+
+          <!-- Order Summary -->
+          <div class="lg:w-1/3">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 sticky top-24">
+              <h3 class="font-bold text-lg text-gray-900 mb-4">Order Summary</h3>
+              <div class="space-y-3 mb-4" id="summary-lines">
+              </div>
+              <div class="border-t border-gray-100 pt-4 mb-6">
+                <div class="flex justify-between items-center">
+                  <span class="font-bold text-lg text-gray-900">Subtotal</span>
+                  <span class="font-extrabold text-xl text-bc-800 price-tag" id="cart-total">KES 0</span>
+                </div>
+                <p class="text-xs text-gray-500 mt-1">Delivery fees calculated at checkout</p>
+              </div>
+              <a href="checkout.html" id="checkout-btn" class="btn-press block w-full bg-bc-800 hover:bg-bc-700 text-white font-bold py-3.5 rounded-xl text-center text-lg transition">
+                Proceed to Checkout
+              </a>
+              <div class="mt-4 flex items-center gap-2 justify-center text-sm text-gray-500">
+                <i class="fas fa-lock text-bc-600"></i>
+                <span>Secure checkout with M-Pesa</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty Cart -->
+      <div id="empty-cart" class="hidden text-center py-20">
+        <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+          <i class="fas fa-shopping-cart text-gray-300 text-3xl"></i>
+        </div>
+        <h2 class="text-2xl font-bold text-gray-400 mb-2">Your cart is empty</h2>
+        <p class="text-gray-400 mb-8">Start adding building materials to get started</p>
+        <a href="materials.html" class="btn-press inline-flex items-center gap-2 bg-bc-800 hover:bg-bc-700 text-white font-bold px-8 py-3.5 rounded-xl text-lg transition">
+          <i class="fas fa-store"></i> Browse Materials
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-bc-900 text-green-200 py-8 mt-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      <a href="index.html" class="flex items-center gap-2 text-white font-bold text-lg">
+        <span class="bg-bc-400 w-7 h-7 rounded-lg flex items-center justify-center text-bc-900"><i class="fas fa-hard-hat"></i></span>
+        Build<span class="text-amber-400">Cart</span>
+      </a>
+      <p class="text-sm">From Foundation to Finish, We've Got You &bull; Nairobi, Kenya</p>
+      <a href="https://wa.me/254712345678" target="_blank" class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-500 text-white font-semibold px-4 py-2 rounded-lg text-sm transition">
+        <i class="fab fa-whatsapp"></i> WhatsApp Us
+      </a>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    function renderCart() {
+      const items = Cart.getItems();
+      const contentEl = document.getElementById('cart-content');
+      const emptyEl = document.getElementById('empty-cart');
+
+      if (items.length === 0) {
+        contentEl.classList.add('hidden');
+        emptyEl.classList.remove('hidden');
+        return;
+      }
+
+      contentEl.classList.remove('hidden');
+      emptyEl.classList.add('hidden');
+
+      // Render items
+      const listEl = document.getElementById('cart-items-list');
+      listEl.innerHTML = '<div class="divide-y divide-gray-100">' + items.map(item => `
+        <div class="flex items-center gap-4 p-4" id="cart-item-${item.id}">
+          <div class="flex-1 min-w-0">
+            <h4 class="font-semibold text-gray-900 text-sm mb-0.5">${item.name}</h4>
+            <p class="text-xs text-gray-500">${item.brand} &bull; ${item.unit}</p>
+          </div>
+          <div class="qty-stepper flex items-center gap-2">
+            <button onclick="updateCartQty('${item.id}', ${item.qty - 1})">−</button>
+            <input type="number" value="${item.qty}" min="1" onchange="updateCartQty('${item.id}', parseInt(this.value)||1)" class="text-sm">
+            <button onclick="updateCartQty('${item.id}', ${item.qty + 1})">+</button>
+          </div>
+          <div class="text-right min-w-[80px]">
+            <p class="font-bold text-bc-800 price-tag text-sm">${formatKES(item.price * item.qty)}</p>
+          </div>
+          <button onclick="removeCartItem('${item.id}')" class="text-gray-400 hover:text-red-500 p-1 transition" title="Remove">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+      `).join('') + '</div>';
+
+      // Summary
+      const summaryEl = document.getElementById('summary-lines');
+      summaryEl.innerHTML = items.map(item => `
+        <div class="flex justify-between text-sm">
+          <span class="text-gray-600 truncate pr-4">${item.name} × ${item.qty}</span>
+          <span class="text-gray-900 font-medium price-tag">${formatKES(item.price * item.qty)}</span>
+        </div>
+      `).join('');
+
+      document.getElementById('cart-total').textContent = formatKES(Cart.getTotal());
+    }
+
+    function updateCartQty(id, qty) {
+      if (qty < 1) {
+        removeCartItem(id);
+        return;
+      }
+      Cart.updateQty(id, qty);
+      renderCart();
+    }
+
+    function removeCartItem(id) {
+      Cart.removeItem(id);
+      renderCart();
+      showToast('Item removed from cart');
+    }
+
+    renderCart();
+  </script>
+  <script src="js/pwa.js"></script>
+</body>
+</html>

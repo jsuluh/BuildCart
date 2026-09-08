@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#166534">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="BuildCart">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <title>Materials Catalog — BuildCart Kenya</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{colors:{bc:{'50':'#f0fdf4','100':'#dcfce7','200':'#bbf7d0','300':'#86efac','400':'#4ade80','500':'#22c55e','600':'#16a34a','700':'#15803d','800':'#166534','900':'#14532d'},amber:{'400':'#fbbf24','500':'#f59e0b'}}}}}</script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+  <!-- NAVBAR -->
+  <nav class="bg-bc-800 shadow-lg sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center justify-between h-16">
+        <a href="index.html" class="flex items-center gap-2 text-white font-bold text-xl tracking-tight">
+          <span class="bg-bc-400 w-9 h-9 rounded-lg flex items-center justify-center text-bc-900"><i class="fas fa-hard-hat"></i></span>
+          Build<span class="text-amber-400">Cart</span>
+        </a>
+        <div class="hidden md:flex items-center gap-6">
+          <a href="materials.html" class="text-white font-medium text-sm">Materials</a>
+          <a href="services.html" class="text-gray-200 hover:text-white font-medium text-sm transition">Hire a Fundi</a>
+          <a href="calculator.html" class="text-gray-200 hover:text-white font-medium text-sm transition">Calculator</a>
+          <a href="orders.html" class="text-gray-200 hover:text-white font-medium text-sm transition">Orders</a>
+          <button onclick="SwahiliToggle.toggle(); location.reload();" id="lang-btn" class="text-sm text-gray-200 hover:text-white font-medium px-3 py-1 rounded-lg border border-green-700 hover:border-green-500 transition">🇰🇪 SW</button>
+          <a href="cart.html" class="relative text-gray-200 hover:text-white transition p-2">
+            <i class="fas fa-shopping-cart text-lg"></i>
+            <span id="cart-badge" class="absolute -top-1 -right-1 bg-amber-500 text-bc-900 text-xs font-bold rounded-full w-5 h-5 items-center justify-center" style="display:none">0</span>
+          </a>
+        </div>
+        <div class="md:hidden flex items-center gap-3">
+          <button onclick="SwahiliToggle.toggle(); location.reload();" class="text-sm text-gray-200 font-medium px-2 py-1 rounded-lg border border-green-700">🇰🇪</button>
+          <a href="cart.html" class="relative text-gray-200 p-2">
+            <i class="fas fa-shopping-cart text-lg"></i>
+            <span id="cart-badge" class="absolute -top-1 -right-1 bg-amber-500 text-bc-900 text-xs font-bold rounded-full w-5 h-5 items-center justify-center" style="display:none">0</span>
+          </a>
+          <button onclick="toggleMobileMenu()" class="text-gray-200 p-2"><i class="fas fa-bars text-xl"></i></button>
+        </div>
+      </div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-bc-900 border-t border-bc-700">
+      <div class="px-4 py-3 space-y-2">
+        <a href="materials.html" class="block text-white py-2 font-medium">Materials</a>
+        <a href="services.html" class="block text-gray-200 hover:text-white py-2 font-medium">Hire a Fundi</a>
+        <a href="calculator.html" class="block text-gray-200 hover:text-white py-2 font-medium">Calculator</a>
+        <a href="orders.html" class="block text-gray-200 hover:text-white py-2 font-medium">Orders</a>
+        <a href="cart.html" class="block text-gray-200 hover:text-white py-2 font-medium">Cart</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <section class="bg-gradient-to-r from-bc-800 to-bc-900 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center gap-3 mb-2">
+        <a href="index.html" class="text-green-200 hover:text-white text-sm"><i class="fas fa-home"></i></a>
+        <i class="fas fa-chevron-right text-green-300 text-xs"></i>
+        <span class="text-green-200 text-sm">Materials</span>
+      </div>
+      <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-2" id="page-title">Building Materials</h1>
+      <p class="text-green-200" id="page-subtitle">Browse our full catalog of quality construction materials</p>
+    </div>
+  </section>
+
+  <!-- FILTERS & PRODUCTS -->
+  <section class="py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="lg:flex gap-8">
+
+        <!-- SIDEBAR FILTERS -->
+        <aside class="lg:w-64 mb-6 lg:mb-0 shrink-0">
+          <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 space-y-6 sticky top-24">
+            <!-- Search -->
+            <div>
+              <label class="font-semibold text-sm text-gray-700 mb-2 block">Search</label>
+              <div class="relative">
+                <input type="text" id="search-input" placeholder="Search products..." class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm pr-10" onkeyup="if(event.key==='Enter') applyFilters()">
+                <button onclick="applyFilters()" class="absolute right-2 top-2.5 text-gray-400 hover:text-bc-700"><i class="fas fa-search"></i></button>
+              </div>
+            </div>
+
+            <!-- Category -->
+            <div>
+              <label class="font-semibold text-sm text-gray-700 mb-2 block">Category</label>
+              <select id="filter-category" onchange="applyFilters()" class="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm">
+                <option value="">All Categories</option>
+              </select>
+            </div>
+
+            <!-- Brand -->
+            <div>
+              <label class="font-semibold text-sm text-gray-700 mb-2 block">Brand</label>
+              <select id="filter-brand" onchange="applyFilters()" class="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm">
+                <option value="">All Brands</option>
+              </select>
+            </div>
+
+            <!-- Price Range -->
+            <div>
+              <label class="font-semibold text-sm text-gray-700 mb-2 block">Price Range (KES)</label>
+              <div class="flex gap-2">
+                <input type="number" id="filter-min" placeholder="Min" class="w-1/2 border border-gray-200 rounded-lg px-3 py-2.5 text-sm">
+                <input type="number" id="filter-max" placeholder="Max" class="w-1/2 border border-gray-200 rounded-lg px-3 py-2.5 text-sm">
+              </div>
+              <button onclick="applyFilters()" class="mt-2 w-full bg-bc-50 text-bc-800 font-medium py-2 rounded-lg text-sm hover:bg-bc-100 transition">Apply</button>
+            </div>
+
+            <!-- Sort -->
+            <div>
+              <label class="font-semibold text-sm text-gray-700 mb-2 block">Sort By</label>
+              <select id="filter-sort" onchange="applyFilters()" class="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm">
+                <option value="">Default</option>
+                <option value="price-asc">Price: Low → High</option>
+                <option value="price-desc">Price: High → Low</option>
+                <option value="name">Name A–Z</option>
+              </select>
+            </div>
+
+            <button onclick="clearFilters()" class="w-full bg-gray-100 text-gray-600 font-medium py-2 rounded-lg text-sm hover:bg-gray-200 transition">Clear All Filters</button>
+
+            <!-- Material Calculator Mini -->
+            <div class="pt-4 border-t border-gray-100">
+              <label class="font-semibold text-sm text-gray-700 mb-2 block"><i class="fas fa-calculator text-bc-600 mr-1"></i> Quick Calculator</label>
+              <select id="calc-type" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm mb-2">
+                <option value="">Select calculation...</option>
+                <option value="cement">Cement (bags per m³)</option>
+                <option value="blocks">Blocks (per m² wall)</option>
+                <option value="roofing">Roofing Sheets (per m²)</option>
+                <option value="paint">Paint (L per m²)</option>
+                <option value="tiles">Tiles (per m² floor)</option>
+              </select>
+              <input type="number" id="calc-input" placeholder="Area / Volume (m² or m³)" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm mb-2">
+              <button onclick="runCalculation()" class="w-full bg-bc-800 text-white font-medium py-2 rounded-lg text-sm hover:bg-bc-700 transition">Calculate</button>
+              <p id="calc-result" class="text-xs text-gray-600 mt-2 min-h-[20px]"></p>
+            </div>
+          </div>
+        </aside>
+
+        <!-- PRODUCT GRID -->
+        <div class="flex-1">
+          <div class="flex items-center justify-between mb-4">
+            <p class="text-sm text-gray-600" id="result-count">Showing 0 products</p>
+            <button id="mobile-filter-toggle" class="lg:hidden bg-bc-800 text-white font-medium px-4 py-2 rounded-lg text-sm" onclick="document.getElementById('mobile-filters').classList.toggle('hidden')">
+              <i class="fas fa-filter"></i> Filters
+            </button>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5" id="product-grid">
+            <!-- Populated by JS -->
+          </div>
+          <!-- Empty state -->
+          <div id="empty-state" class="hidden text-center py-16">
+            <i class="fas fa-box-open text-gray-300 text-5xl mb-4"></i>
+            <h3 class="text-xl font-bold text-gray-400 mb-2">No products found</h3>
+            <p class="text-gray-400 mb-4">Try adjusting your filters or search term</p>
+            <button onclick="clearFilters()" class="bg-bc-800 text-white font-semibold px-6 py-2.5 rounded-lg">Clear Filters</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-bc-900 text-green-200 py-8 mt-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      <a href="index.html" class="flex items-center gap-2 text-white font-bold text-lg">
+        <span class="bg-bc-400 w-7 h-7 rounded-lg flex items-center justify-center text-bc-900"><i class="fas fa-hard-hat"></i></span>
+        Build<span class="text-amber-400">Cart</span>
+      </a>
+      <p class="text-sm">From Foundation to Finish, We've Got You &bull; Nairobi, Kenya</p>
+      <a href="https://wa.me/254712345678" target="_blank" class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-500 text-white font-semibold px-4 py-2 rounded-lg text-sm transition">
+        <i class="fab fa-whatsapp"></i> WhatsApp Us
+      </a>
+    </div>
+  </footer>
+
+  <!-- WhatsApp float -->
+  <a href="https://wa.me/254712345678?text=Hi%20BuildCart%2C%20I%20need%20help%20finding%20materials" target="_blank" class="whatsapp-float fixed bottom-6 right-6 bg-green-600 hover:bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-2xl z-40 transition">
+    <i class="fab fa-whatsapp text-2xl"></i>
+  </a>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    // Calculator function
+    function runCalculation() {
+      const type = document.getElementById('calc-type').value;
+      const input = parseFloat(document.getElementById('calc-input').value);
+      const resultEl = document.getElementById('calc-result');
+
+      if (!type || !input || input <= 0) {
+        resultEl.textContent = 'Please select a type and enter a value';
+        return;
+      }
+
+      let result;
+      if (type === 'cement') result = MaterialCalculator.calculateCement(input);
+      else if (type === 'blocks') result = MaterialCalculator.calculateBlocks(input);
+      else if (type === 'roofing') result = MaterialCalculator.calculateRoofing(input);
+      else if (type === 'paint') result = MaterialCalculator.calculatePaint(input);
+      else if (type === 'tiles') result = MaterialCalculator.calculateTiles(input);
+
+      resultEl.textContent = result.description;
+    }
+  </script>
+  <script src="js/pwa.js"></script>
+</body>
+</html>

@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#166534">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="BuildCart">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <title>Admin Dashboard — BuildCart Kenya</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{colors:{bc:{'50':'#f0fdf4','100':'#dcfce7','200':'#bbf7d0','300':'#86efac','400':'#4ade80','500':'#22c55e','600':'#16a34a','700':'#15803d','800':'#166534','900':'#14532d'},amber:{'400':'#fbbf24','500':'#f59e0b'}}}}}</script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .sidebar-link.active { background: rgba(22,101,52,.12); color: #166534; font-weight: 700; }
+    .sidebar-link:hover { background: rgba(22,101,52,.06); }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-900 min-h-screen flex">
+
+  <!-- SIDEBAR -->
+  <aside class="w-64 bg-white border-r border-gray-200 flex flex-col fixed top-0 left-0 h-full z-30" id="sidebar">
+    <div class="px-5 py-5 border-b border-gray-100">
+      <a href="index.html" class="flex items-center gap-2 font-bold text-xl tracking-tight text-bc-800">
+        <span class="bg-bc-400 w-8 h-8 rounded-lg flex items-center justify-center text-bc-900"><i class="fas fa-hard-hat"></i></span>
+        Build<span class="text-amber-500">Cart</span>
+      </a>
+      <p class="text-xs text-gray-400 mt-1">Admin Dashboard</p>
+    </div>
+    <nav class="flex-1 py-4 space-y-1 px-3">
+      <button onclick="showPanel('overview')" class="sidebar-link active w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-gray-700 transition">
+        <i class="fas fa-chart-pie w-5 text-center"></i> Overview
+      </button>
+      <button onclick="showPanel('orders')" class="sidebar-link w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-gray-700 transition">
+        <i class="fas fa-shopping-bag w-5 text-center"></i> Orders
+      </button>
+      <button onclick="showPanel('quotes')" class="sidebar-link w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-gray-700 transition">
+        <i class="fas fa-file-invoice w-5 text-center"></i> Quote Requests
+      </button>
+      <button onclick="showPanel('fundis')" class="sidebar-link w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-gray-700 transition">
+        <i class="fas fa-user-hard-hat w-5 text-center"></i> Fundi Leads
+      </button>
+      <button onclick="showPanel('products')" class="sidebar-link w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-gray-700 transition">
+        <i class="fas fa-boxes-stacked w-5 text-center"></i> Products
+      </button>
+    </nav>
+    <div class="px-5 py-4 border-t border-gray-100">
+      <a href="index.html" class="text-sm text-gray-500 hover:text-bc-800 flex items-center gap-2 transition">
+        <i class="fas fa-arrow-left"></i> Back to Store
+      </a>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="flex-1 ml-64 min-h-screen">
+    <!-- TOP BAR -->
+    <header class="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between sticky top-0 z-20">
+      <div class="flex items-center gap-4">
+        <button onclick="document.getElementById('sidebar').classList.toggle('hidden');document.querySelector('main').classList.toggle('ml-64');document.querySelector('main').classList.toggle('ml-0');" class="lg:hidden text-gray-500"><i class="fas fa-bars text-lg"></i></button>
+        <h1 class="text-xl font-bold text-gray-900" id="panel-title">Overview</h1>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="text-xs text-gray-400">API Key:</span>
+        <input type="password" id="admin-key" value="buildcart-admin-2024" class="border border-gray-200 rounded px-2 py-1 text-sm w-48">
+        <button onclick="fetchData()" class="bg-bc-800 text-white text-sm font-medium px-3 py-1 rounded-lg hover:bg-bc-700 transition">Connect</button>
+      </div>
+    </header>
+
+    <!-- OVERVIEW PANEL -->
+    <div id="panel-overview" class="p-6">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div class="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-10 h-10 bg-bc-50 rounded-lg flex items-center justify-center"><i class="fas fa-shopping-bag text-bc-600"></i></div>
+            <span class="text-sm text-gray-500">Total Orders</span>
+          </div>
+          <p class="text-3xl font-extrabold text-gray-900" id="stat-orders">0</p>
+        </div>
+        <div class="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-10 h-10 bg-amber-50 rounded-lg flex items-center justify-center"><i class="fas fa-coins text-amber-500"></i></div>
+            <span class="text-sm text-gray-500">Revenue (KES)</span>
+          </div>
+          <p class="text-3xl font-extrabold text-gray-900" id="stat-revenue">0</p>
+        </div>
+        <div class="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center"><i class="fas fa-file-invoice text-blue-500"></i></div>
+            <span class="text-sm text-gray-500">Quote Requests</span>
+          </div>
+          <p class="text-3xl font-extrabold text-gray-900" id="stat-quotes">0</p>
+        </div>
+        <div class="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-10 h-10 bg-purple-50 rounded-lg flex items-center justify-center"><i class="fas fa-user-hard-hat text-purple-500"></i></div>
+            <span class="text-sm text-gray-500">Fundi Leads</span>
+          </div>
+          <p class="text-3xl font-extrabold text-gray-900" id="stat-fundis">0</p>
+        </div>
+      </div>
+
+      <!-- Order Status Breakdown -->
+      <div class="bg-white rounded-xl p-6 border border-gray-100 shadow-sm">
+        <h2 class="font-bold text-lg mb-4">Orders by Status</h2>
+        <div class="grid sm:grid-cols-3 lg:grid-cols-6 gap-4" id="status-breakdown">
+          <p class="text-gray-400 text-sm">Loading...</p>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="mt-6 grid sm:grid-cols-2 gap-4">
+        <a href="materials.html" class="bg-bc-800 hover:bg-bc-700 text-white rounded-xl p-5 transition flex items-center gap-4">
+          <i class="fas fa-store text-2xl text-bc-400"></i>
+          <div>
+            <p class="font-bold">View Store</p>
+            <p class="text-green-200 text-sm">See what customers see</p>
+          </div>
+        </a>
+        <a href="https://developer.safaricom.co.ke" target="_blank" class="bg-gray-800 hover:bg-gray-700 text-white rounded-xl p-5 transition flex items-center gap-4">
+          <i class="fas fa-mobile-alt text-2xl text-amber-400"></i>
+          <div>
+            <p class="font-bold">M-Pesa Dashboard</p>
+            <p class="text-gray-300 text-sm">Daraja API console</p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ORDERS PANEL -->
+    <div id="panel-orders" class="p-6 hidden">
+      <div class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+        <div class="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
+          <h2 class="font-bold">All Orders</h2>
+          <select id="order-filter" onchange="fetchOrders()" class="border border-gray-200 rounded-lg px-3 py-1.5 text-sm">
+            <option value="">All Statuses</option>
+            <option value="placed">Placed</option>
+            <option value="confirmed">Confirmed</option>
+            <option value="processing">Processing</option>
+            <option value="shipped">Shipped</option>
+            <option value="delivered">Delivered</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead class="bg-gray-50 text-gray-500">
+              <tr>
+                <th class="px-5 py-3 text-left font-medium">Order ID</th>
+                <th class="px-5 py-3 text-left font-medium">Customer</th>
+                <th class="px-5 py-3 text-left font-medium">Phone</th>
+                <th class="px-5 py-3 text-right font-medium">Total</th>
+                <th class="px-5 py-3 text-center font-medium">Status</th>
+                <th class="px-5 py-3 text-center font-medium">Payment</th>
+                <th class="px-5 py-3 text-center font-medium">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="orders-tbody">
+              <tr><td colspan="7" class="text-center py-8 text-gray-400">Connect to API to load orders</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUOTES PANEL -->
+    <div id="panel-quotes" class="p-6 hidden">
+      <div class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+        <div class="px-5 py-4 border-b border-gray-100">
+          <h2 class="font-bold">Quote Requests</h2>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead class="bg-gray-50 text-gray-500">
+              <tr>
+                <th class="px-5 py-3 text-left font-medium">ID</th>
+                <th class="px-5 py-3 text-left font-medium">Name</th>
+                <th class="px-5 py-3 text-left font-medium">Phone</th>
+                <th class="px-5 py-3 text-left font-medium">Project</th>
+                <th class="px-5 py-3 text-left font-medium">Budget</th>
+                <th class="px-5 py-3 text-center font-medium">Status</th>
+              </tr>
+            </thead>
+            <tbody id="quotes-tbody">
+              <tr><td colspan="6" class="text-center py-8 text-gray-400">Connect to API to load quotes</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- FUNDIS PANEL -->
+    <div id="panel-fundis" class="p-6 hidden">
+      <div class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+        <div class="px-5 py-4 border-b border-gray-100">
+          <h2 class="font-bold">Fundi Hire Requests</h2>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead class="bg-gray-50 text-gray-500">
+              <tr>
+                <th class="px-5 py-3 text-left font-medium">ID</th>
+                <th class="px-5 py-3 text-left font-medium">Client</th>
+                <th class="px-5 py-3 text-left font-medium">Phone</th>
+                <th class="px-5 py-3 text-left font-medium">Project</th>
+                <th class="px-5 py-3 text-center font-medium">Status</th>
+              </tr>
+            </thead>
+            <tbody id="fundis-tbody">
+              <tr><td colspan="5" class="text-center py-8 text-gray-400">Connect to API to load fundi leads</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCTS PANEL -->
+    <div id="panel-products" class="p-6 hidden">
+      <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="font-bold">Product Catalog</h2>
+          <span class="text-sm text-gray-400">Loaded from data.js</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead class="bg-gray-50 text-gray-500">
+              <tr>
+                <th class="px-4 py-3 text-left font-medium">ID</th>
+                <th class="px-4 py-3 text-left font-medium">Name</th>
+                <th class="px-4 py-3 text-left font-medium">Category</th>
+                <th class="px-4 py-3 text-left font-medium">Brand</th>
+                <th class="px-4 py-3 text-right font-medium">Price (KES)</th>
+              </tr>
+            </thead>
+            <tbody id="products-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    const API_BASE = window.location.origin;
+    let adminKey = document.getElementById('admin-key').value;
+
+    function getAdminKey() {
+      return document.getElementById('admin-key').value || 'buildcart-admin-2024';
+    }
+
+    function showPanel(name) {
+      ['overview','orders','quotes','fundis','products'].forEach(p => {
+        document.getElementById('panel-' + p).classList.toggle('hidden', p !== name);
+      });
+      document.getElementById('panel-title').textContent =
+        name === 'overview' ? 'Overview' :
+        name === 'orders'  ? 'Orders' :
+        name === 'quotes' ? 'Quote Requests' :
+        name === 'fundis' ? 'Fundi Leads' :
+        name === 'products' ? 'Products' : name;
+      document.querySelectorAll('.sidebar-link').forEach((el, i) => {
+        const panels = ['overview','orders','quotes','fundis','products'];
+        el.classList.toggle('active', panels[i] === name);
+      });
+      fetchData();
+    }
+
+    async function fetchData() {
+      const key = getAdminKey();
+      try {
+        const res = await fetch(`${API_BASE}/api/admin/stats`, { headers: { 'x-admin-key': key } });
+        if (!res.ok) throw new Error('API error');
+        const data = await res.json();
+        document.getElementById('stat-orders').textContent = data.totalOrders;
+        document.getElementById('stat-revenue').textContent = formatKES(data.totalRevenue);
+        document.getElementById('stat-quotes').textContent = data.totalQuotes;
+        document.getElementById('stat-fundis').textContent = data.totalFundiLeads;
+
+        const bd = document.getElementById('status-breakdown');
+        const colors = { placed:'bg-blue-100 text-blue-800', confirmed:'bg-yellow-100 text-yellow-800', processing:'bg-amber-100 text-amber-800', shipped:'bg-purple-100 text-purple-800', delivered:'bg-green-100 text-green-800', cancelled:'bg-red-100 text-red-800' };
+        bd.innerHTML = Object.entries(data.ordersByStatus || {}).map(([s,c]) =>
+          `<div class="rounded-lg p-3 text-center ${colors[s]||'bg-gray-100 text-gray-800'}">
+            <p class="text-2xl font-extrabold">${c}</p>
+            <p class="text-xs font-medium mt-1">${s.charAt(0).toUpperCase()+s.slice(1)}</p>
+          </div>`
+        ).join('') || '<p class="text-gray-400 text-sm">No orders yet</p>';
+      } catch(e) {
+        console.warn('Admin API not available (is the server running?)', e);
+        // Show local/demo data from localStorage
+        const localOrders = JSON.parse(localStorage.getItem('buildcart_orders') || '[]');
+        document.getElementById('stat-orders').textContent = localOrders.length;
+        document.getElementById('stat-revenue').textContent = formatKES(localOrders.reduce((s,o) => s + (o.total||0), 0));
+        document.getElementById('stat-quotes').textContent = '0';
+        document.getElementById('stat-fundis').textContent = '0';
+      }
+
+      // Load products panel from local data
+      const products = window.BUILDCART_DATA?.PRODUCTS || [];
+      document.getElementById('products-tbody').innerHTML = products.map(p =>
+        `<tr class="border-b border-gray-50 hover:bg-gray-50">
+          <td class="px-4 py-2.5 text-gray-400">${p.id}</td>
+          <td class="px-4 py-2.5 font-medium">${p.name}</td>
+          <td class="px-4 py-2.5 text-gray-500">${p.category}</td>
+          <td class="px-4 py-2.5 text-gray-500">${p.brand}</td>
+          <td class="px-4 py-2.5 text-right font-medium">${formatKES(p.price)}</td>
+        </tr>`
+      ).join('') || '<tr><td colspan="5" class="text-center py-4 text-gray-400">No products loaded</td></tr>';
+
+      fetchOrders();
+      fetchQuotes();
+      fetchFundiLeads();
+    }
+
+    async function fetchOrders() {
+      const status = document.getElementById('order-filter')?.value || '';
+      const key = getAdminKey();
+      try {
+        const res = await fetch(`${API_BASE}/api/admin/orders?status=${status}`, { headers: { 'x-admin-key': key } });
+        if (!res.ok) throw new Error('API error');
+        const data = await res.json();
+        renderOrdersTable(data.orders);
+      } catch(e) {
+        // Fall back to localStorage orders
+        const local = JSON.parse(localStorage.getItem('buildcart_orders') || '[]');
+        const filtered = status ? local.filter(o => o.status === status) : local;
+        renderOrdersTable(filtered);
+      }
+    }
+
+    function renderOrdersTable(orders) {
+      const statusColors = { placed:'bg-blue-100 text-blue-800', confirmed:'bg-yellow-100 text-yellow-800', processing:'bg-amber-100 text-amber-800', shipped:'bg-purple-100 text-purple-800', delivered:'bg-green-100 text-green-800', cancelled:'bg-red-100 text-red-800' };
+      document.getElementById('orders-tbody').innerHTML = orders.map(o =>
+        `<tr class="border-b border-gray-50 hover:bg-gray-50">
+          <td class="px-5 py-3 font-mono text-sm">${o.id}</td>
+          <td class="px-5 py-3 font-medium">${o.customerName || 'N/A'}</td>
+          <td class="px-5 py-3 text-gray-500">${o.customerPhone || ''}</td>
+          <td class="px-5 py-3 text-right font-medium">${formatKES(o.total)}</td>
+          <td class="px-5 py-3 text-center"><span class="px-2 py-0.5 rounded-full text-xs font-bold ${statusColors[o.status]||'bg-gray-100 text-gray-800'}">${o.status}</span></td>
+          <td class="px-5 py-3 text-center text-gray-500">${o.paymentMethod === 'mpesa' ? 'M-Pesa' : 'COD'}</td>
+          <td class="px-5 py-3 text-center">
+            <select onchange="updateOrderStatus('${o.id}', this.value)" class="border rounded px-2 py-1 text-xs">
+              <option value="">Update Status</option>
+              <option value="confirmed">Confirmed</option>
+              <option value="processing">Processing</option>
+              <option value="shipped">Shipped</option>
+              <option value="delivered">Delivered</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+          </td>
+        </tr>`
+      ).join('') || '<tr><td colspan="7" class="text-center py-8 text-gray-400">No orders found</td></tr>';
+    }
+
+    async function updateOrderStatus(orderId, status) {
+      if (!status) return;
+      const key = getAdminKey();
+      try {
+        const res = await fetch(`${API_BASE}/api/orders/${orderId}/status`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json', 'x-admin-key': key },
+          body: JSON.stringify({ status })
+        });
+        if (!res.ok) throw new Error('API error');
+        showToast('Order status updated', 'success');
+        fetchData();
+      } catch(e) {
+        // Update localStorage fallback
+        const local = JSON.parse(localStorage.getItem('buildcart_orders') || '[]');
+        const order = local.find(o => o.id === orderId);
+        if (order) {
+          order.status = status;
+          order.statusHistory = order.statusHistory || [];
+          order.statusHistory.push({ status, timestamp: new Date().toISOString() });
+          localStorage.setItem('buildcart_orders', JSON.stringify(local));
+          showToast('Order status updated (local)', 'success');
+          fetchData();
+        }
+      }
+    }
+
+    async function fetchQuotes() {
+      const key = getAdminKey();
+      try {
+        const res = await fetch(`${API_BASE}/api/admin/quotes`, { headers: { 'x-admin-key': key } });
+        if (!res.ok) throw new Error('API error');
+        const data = await res.json();
+        document.getElementById('quotes-tbody').innerHTML = data.quotes.map(q =>
+          `<tr class="border-b border-gray-50 hover:bg-gray-50">
+            <td class="px-5 py-3 font-mono text-sm">${q.id}</td>
+            <td class="px-5 py-3 font-medium">${q.name}</td>
+            <td class="px-5 py-3 text-gray-500">${q.phone}</td>
+            <td class="px-5 py-3 text-gray-600">${q.projectType}</td>
+            <td class="px-5 py-3 text-gray-500">${q.estimatedBudget ? formatKES(q.estimatedBudget) : 'N/A'}</td>
+            <td class="px-5 py-3 text-center"><span class="px-2 py-0.5 rounded-full text-xs font-bold ${q.status==='pending'?'bg-yellow-100 text-yellow-800':'bg-green-100 text-green-800'}">${q.status}</span></td>
+          </tr>`
+        ).join('') || '<tr><td colspan="6" class="text-center py-8 text-gray-400">No quotes yet</td></tr>';
+      } catch(e) {
+        document.getElementById('quotes-tbody').innerHTML = '<tr><td colspan="6" class="text-center py-8 text-gray-400">Start server to view quotes</td></tr>';
+      }
+    }
+
+    async function fetchFundiLeads() {
+      const key = getAdminKey();
+      try {
+        const res = await fetch(`${API_BASE}/api/admin/fundi-leads`, { headers: { 'x-admin-key': key } });
+        if (!res.ok) throw new Error('API error');
+        const data = await res.json();
+        document.getElementById('fundis-tbody').innerHTML = data.leads.map(l =>
+          `<tr class="border-b border-gray-50 hover:bg-gray-50">
+            <td class="px-5 py-3 font-mono text-sm">${l.id}</td>
+            <td class="px-5 py-3 font-medium">${l.clientName}</td>
+            <td class="px-5 py-3 text-gray-500">${l.clientPhone}</td>
+            <td class="px-5 py-3 text-gray-600">${l.projectType || l.projectDesc}</td>
+            <td class="px-5 py-3 text-center"><span class="px-2 py-0.5 rounded-full text-xs font-bold ${l.status==='pending'?'bg-yellow-100 text-yellow-800':'bg-green-100 text-green-800'}">${l.status}</span></td>
+          </tr>`
+        ).join('') || '<tr><td colspan="5" class="text-center py-8 text-gray-400">No leads yet</td></tr>';
+      } catch(e) {
+        document.getElementById('fundis-tbody').innerHTML = '<tr><td colspan="5" class="text-center py-8 text-gray-400">Start server to view fundi leads</td></tr>';
+      }
+    }
+
+    // Initial load
+    fetchData();
+  </script>
+  <script src="js/pwa.js"></script>
+</body>
+</html>

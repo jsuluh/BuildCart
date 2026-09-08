@@ -1,0 +1,196 @@
+/* BuildCart MVP — Custom Styles */
+
+:root {
+  --bc-green: #166534;
+  --bc-green-light: #22c55e;
+  --bc-green-50: #f0fdf4;
+  --bc-amber: #f59e0b;
+  --bc-amber-light: #fbbf24;
+  --bc-slate: #1e293b;
+  --bc-slate-light: #475569;
+}
+
+/* Smooth scrolling */
+html { scroll-behavior: smooth; }
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #f1f5f9; }
+::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 3px; }
+
+/* Hero gradient */
+.hero-gradient {
+  background: linear-gradient(135deg, #166534 0%, #14532d 40%, #1e293b 100%);
+}
+
+/* Hero pattern overlay */
+.hero-pattern {
+  background-image: radial-gradient(circle at 20% 80%, rgba(34,197,94,0.15) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 20%, rgba(245,158,11,0.1) 0%, transparent 50%);
+}
+
+/* Card hover effect */
+.product-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.product-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+}
+
+/* Fundi card */
+.fundi-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.fundi-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+}
+
+/* Pulse animation for WhatsApp button */
+@keyframes pulse-green {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.4); }
+  50% { box-shadow: 0 0 0 12px rgba(34,197,94,0); }
+}
+.whatsapp-float {
+  animation: pulse-green 2s infinite;
+}
+
+/* Trust badge shimmer */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.trust-badge {
+  position: relative;
+  overflow: hidden;
+}
+.trust-badge::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 3s infinite;
+}
+
+/* Category card hover */
+.category-card {
+  transition: all 0.2s ease;
+}
+.category-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+  border-color: var(--bc-green-light);
+}
+.category-card:hover .cat-icon {
+  transform: scale(1.1);
+  color: var(--bc-green-light);
+}
+.cat-icon {
+  transition: all 0.2s ease;
+}
+
+/* Input focus ring */
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(34,197,94,0.2);
+  border-color: var(--bc-green-light);
+}
+
+/* Button press effect */
+.btn-press:active {
+  transform: scale(0.97);
+}
+
+/* Cart slide-in on mobile */
+@media (max-width: 768px) {
+  .cart-drawer {
+    position: fixed;
+    top: 0; right: 0; bottom: 0;
+    width: 100%;
+    max-width: 400px;
+    z-index: 60;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+  }
+  .cart-drawer.open {
+    transform: translateX(0);
+  }
+  .cart-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 55;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .cart-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+/* Price tag style */
+.price-tag {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Search highlight */
+mark {
+  background: #bbf7d0;
+  padding: 0 2px;
+  border-radius: 2px;
+}
+
+/* Skeleton loading */
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.7; }
+}
+.skeleton {
+  background: #e2e8f0;
+  animation: skeleton-pulse 1.5s infinite;
+  border-radius: 8px;
+}
+
+/* Quantity stepper */
+.qty-stepper button {
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #f9fafb;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.15s;
+}
+.qty-stepper button:hover {
+  background: #166534;
+  color: white;
+  border-color: #166534;
+}
+.qty-stepper input {
+  width: 48px;
+  text-align: center;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-weight: 600;
+  padding: 4px;
+}
+
+/* Stat number animation */
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.stat-number {
+  animation: countUp 0.6s ease-out forwards;
+}
+
+/* Footer wave */
+.footer-wave {
+  background: linear-gradient(180deg, #f0fdf4 0%, #166534 100%);
+}
